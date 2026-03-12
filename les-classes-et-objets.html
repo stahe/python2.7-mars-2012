@@ -1,0 +1,1353 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction au langage Python 2.7 par l'exemple">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/python2.7-mars-2012/les-classes-et-objets.html">
+      
+      
+        <link rel="prev" href="exercice-dapplication---impots.html">
+      
+      
+        <link rel="next" href="les-exceptions.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>5. Les classes et objets - Introduction au langage Python 2.7 par l'exemple</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Introduction au langage Python 2.7 par l'exemple";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-les-classes-et-objets" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-header__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction au langage Python 2.7 par l'exemple
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Les classes et objets
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-nav__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Introduction au langage Python 2.7 par l'exemple
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="avant-propos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Avant-propos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation-dun-interpreteur-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Installation d'un interpréteur Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-bases.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Les bases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Exercice d'application – [IMPOTS]
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Les classes et objets
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="les-classes-et-objets.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Les classes et objets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-une-classe-objet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. Une classe Objet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-une-classe-personne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Une classe Personne
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-la-classe-personne-avec-un-constructeur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. La classe Personne avec un constructeur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-la-classe-personne-avec-controles-de-validite-dans-le-constructeur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4. La classe Personne avec contrôles de validité dans le constructeur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-ajout-dune-methode-faisant-office-de-second-constructeur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5. Ajout d&#x27;une méthode faisant office de second constructeur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-une-liste-dobjets-personne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6. Une liste d&#x27;objets Personne
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-creation-dune-classe-derivee-de-la-classe-personne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7. Création d&#x27;une classe dérivée de la classe Personne
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-creation-dune-seconde-classe-derivee-de-la-classe-personne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8. Création d&#x27;une seconde classe dérivée de la classe Personne
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-exceptions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Les exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-en-couches-et-programmation-par-interfaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Architecture en couches et programmation par interfaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots-avec-architecture-en-couches.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Exercice d'application - [IMPOTS] avec architecture en couches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilisation-du-sgbd-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Utilisation du SGBD MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Exercice [IMPOTS] avec MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-fonctions-reseau-de-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Les fonctions réseau de Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="des-services-web-en-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Des services web en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-un-service-web.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Exercice [IMPOTS] avec un service WEB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="traitement-de-documents-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Traitement de documents XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Exercice [IMPOTS] avec XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="refheading382742423505"></a></p>
+<h1 id="5-les-classes-et-objets">5. Les classes et objets</h1>
+<p>La <strong>classe</strong> est le moule à partir duquel sont fabriqués des <strong>objets</strong>. On dit de l&#x27;objet que c&#x27;est l&#x27;<strong>instance</strong> d&#x27;une classe.</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000000B50000017D94275938.png" style="display:inline-block; margin:4px;width:3.35cm;height:7.061cm;" class="odt-zoomable" data-zoom-src="images/10000000000000B50000017D94275938.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td></tr></table>
+
+<p><a id="refheading382762423505"></a></p>
+<h2 id="51-une-classe-objet">5.1. Une classe Objet</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_01)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-markdown">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Objet<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#a31515">&quot;&quot;&quot;une classe Objet vide&quot;&quot;&quot;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># toute variable peut avoir des attributs par construction</span>
+<span class="odt-code-line">obj1<span style="color:#008080">=O</span>bjet<span style="color:#008080">()</span></span>
+<span class="odt-code-line">obj1<span style="color:#0000ff">.</span>attr1<span style="color:#008080">=</span><span style="color:#a31515">&quot;un&quot;</span></span>
+<span class="odt-code-line">obj1<span style="color:#0000ff">.</span>attr2<span style="color:#008080">=</span>100</span>
+<span class="odt-code-line"># affiche l&#x27;objet</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;objet1=[{0},{1}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>obj1<span style="color:#0000ff">.</span>attr1<span style="color:#008080">,</span>obj1<span style="color:#0000ff">.</span>attr2<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># modifie l&#x27;objet</span>
+<span class="odt-code-line">obj1<span style="color:#0000ff">.</span>attr2<span style="color:#008080">+=</span>100</span>
+<span class="odt-code-line"># affiche l&#x27;objet</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;objet1=[{0},{1}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>obj1<span style="color:#0000ff">.</span>attr1<span style="color:#008080">,</span>obj1<span style="color:#0000ff">.</span>attr2<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># affecte la référence objet1 à objet2</span>
+<span class="odt-code-line">obj2<span style="color:#008080">=</span>obj1</span>
+<span class="odt-code-line"># modifie obj2</span>
+<span class="odt-code-line">obj2<span style="color:#0000ff">.</span>attr2<span style="color:#008080">=</span>0</span>
+<span class="odt-code-line"># affiche les deux objets</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;objet1=[{0},{1}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>obj1<span style="color:#0000ff">.</span>attr1<span style="color:#008080">,</span>obj1<span style="color:#0000ff">.</span>attr2<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;objet2=[{0},{1}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>obj2<span style="color:#0000ff">.</span>attr1<span style="color:#008080">,</span>obj2<span style="color:#0000ff">.</span>attr2<span style="color:#008080">)</span></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>ligne 4 : une autre forme de commentaire. Celui-ci précédé de trois &quot; peut alors s&#x27;étaler sur plusieurs lignes ;</li>
+<li>lignes 3-4 : une classe objet vide ;</li>
+<li>ligne 7 : instanciation de la classe <em>Objet</em> ;</li>
+<li>ligne 17 : copie de références. Les variables <em>obj1</em> et <em>obj2</em> sont deux pointeurs (références) sur un même objet.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>objet1=[un,100]
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>objet1=[un,200]
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>objet1=[un,0]
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>objet2=[un,0]
+</code></pre></div></td></tr></table></div>
+<p><a id="refheading382782423505"></a></p>
+<h2 id="52-une-classe-personne">5.2. Une classe Personne</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_02)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># attributs de la classe</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># non déclarés - peuvent être créés dynamiquement</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#008000"># méthode</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> identite<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># à priori, utilise des attributs inexistants</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># les attributs sont publics et peuvent être créés dynamiquement</span>
+<span class="odt-code-line">p<span style="color:#008080">=</span>Personne<span style="color:#008080">()</span></span>
+<span class="odt-code-line">p<span style="color:#0000ff">.</span>prenom<span style="color:#008080">=</span><span style="color:#a31515">&quot;Paul&quot;</span></span>
+<span class="odt-code-line">p<span style="color:#0000ff">.</span>nom<span style="color:#008080">=</span><span style="color:#a31515">&quot;Langevin&quot;</span></span>
+<span class="odt-code-line">p<span style="color:#0000ff">.</span>age<span style="color:#008080">=</span>48</span>
+<span class="odt-code-line"># appel d&#x27;une méthode</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}\n&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p<span style="color:#0000ff">.</span>identite<span style="color:#008080">())</span></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 3-10 : une classe avec une méthode ;</li>
+<li>ligne 8 : toute méthode d&#x27;une classe doit avoir pour premier paramètre, l&#x27;objet <em>self</em> qui désigne l&#x27;objet courant.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>personne=[Paul,Langevin,48]
+</code></pre></div>
+<p><a id="refheading382802423505"></a></p>
+<h2 id="53-la-classe-personne-avec-un-constructeur">5.3. La classe Personne avec un constructeur</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_03)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-markdown">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    </span>
+<span class="odt-code-line">    <span style="color:#008000"># constructeur</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">,</span>nom<span style="color:#008080">,</span>age<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">=</span>prenom<span style="color:#008080">;</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>nom<span style="color:#008080">=</span>nom<span style="color:#008080">;</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>age<span style="color:#008080">=</span>age<span style="color:#008080">;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#008000"># méthode</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> identite<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># à priori, utilise des attributs inexistants</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># un objet Personne</span>
+<span class="odt-code-line">p<span style="color:#008080">=</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;Paul&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Langevin&quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># appel d&#x27;une méthode</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}\n&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p<span style="color:#0000ff">.</span>identite<span style="color:#008080">())</span></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>ligne 6 : le constructeur d&#x27;une classe s&#x27;appelle <strong>__init__</strong>. Comme pour les autres méthodes, son premier paramètre est <strong>self ;</strong></li>
+<li>ligne 18 : un objet <em>Personne</em> est construit avec le constructeur de la classe.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>personne=[Paul,Langevin,48]
+</code></pre></div>
+<p><a id="refheading382822423505"></a></p>
+<h2 id="54-la-classe-personne-avec-controles-de-validite-dans-le-constructeur">5.4. La classe Personne avec contrôles de validité dans le constructeur</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_04)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># -------------------</span>
+<span class="odt-code-line"># une classe d&#x27;exception propriétaire</span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> MyError<span style="color:#008080">(</span>Exception<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">pass</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    </span>
+<span class="odt-code-line">    <span style="color:#008000"># constructeur</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>age<span style="color:#008080">=</span>0<span style="color:#008080">):</span></span>
+<span class="odt-code-line">         <span style="color:#008000"># le prénom doit être non vide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\S+)\s*$&quot;</span><span style="color:#008080">,</span>prenom<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;Le prenom ne peut etre vide&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># le nom doit être non vide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\S+)\s*$&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;Le nom ne peut etre vide&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>nom<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># l&#x27;âge doit être valide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\d+)\s*$&quot;</span><span style="color:#008080">,</span>str<span style="color:#008080">(</span>age<span style="color:#008080">))</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;l&#x27;age doit etre un entier positif&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>age<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __str__<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line">      </span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># un objet Personne</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p<span style="color:#008080">=</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;  Paul  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  Langevin  &quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+<span class="odt-code-line"># un autre objet Personne</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p<span style="color:#008080">=</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;  xx  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  yy  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  zz&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+<span class="odt-code-line"># une autre personne</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p<span style="color:#008080">=</span>Personne<span style="color:#008080">()</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 7-8 : une classe <em>MyError</em> dérivée de la classe <em>Exception</em>. Elle n&#x27;ajoute aucune fonctionnalité à cette dernière. Elle n&#x27;est là que pour avoir une exception propriétaire ;</li>
+<li>ligne 13 : le constructeur a des valeurs par défaut pour ses paramètres. Ainsi l&#x27;opération <em>p=Personne()</em> est équivalente à <em>p=Personne(&quot;x&quot;,&quot;x&quot;,0) ;</em></li>
+<li>lignes 15-9 : on analyse le paramètre <em>prenom</em>. Il doit être non vide. Si ce n&#x27;est pas le cas, on lance l&#x27;exception <em>MyError</em> avec un message d&#x27;erreur ;</li>
+<li>lignes 21-25 : idem pour le nom ;</li>
+<li>lignes 27-31 : vérification de l&#x27;âge ;</li>
+<li>lignes 33-34 : la fonction <em>__str__</em> remplace la méthode qui s&#x27;appelait <em>identite</em> précédemment ;</li>
+<li>lignes 38-42 : instanciation d&#x27;une personne puis affichage de son identité ;</li>
+<li>ligne 39 : instanciation ;</li>
+<li>ligne 40 : affichage. L&#x27;opération demande d&#x27;afficher la personne <em>p</em> sous la forme d&#x27;une chaîne de caractères. L&#x27;interpréteur Python appelle alors automatiquement la méthode <em>p.__str__()</em> si elle existe. Cette méthode joue le même rôle que la méthode <em>toString()</em> en Java ou dans les langages .NET ;</li>
+<li>lignes 41-42 : gestion d&#x27;une éventuelle exception de type <em>MyError</em>. Affiche alors le message d&#x27;erreur associé à l&#x27;exception ;</li>
+<li>lignes 44-48 : idem pour une deuxième personne instanciée avec des paramètres erronés ;</li>
+<li>lignes 50-54 : idem pour une troisième personne instanciée avec les paramètres par défaut.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>personne=[Paul,Langevin,48]
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>l&#39;age doit etre un entier positif
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>personne=[x,x,0]
+</code></pre></div></td></tr></table></div>
+<p><a id="refheading382842423505"></a></p>
+<h2 id="55-ajout-dune-methode-faisant-office-de-second-constructeur">5.5. Ajout d&#x27;une méthode faisant office de second constructeur</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_05)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># -------------------</span>
+<span class="odt-code-line"># une classe d&#x27;exception propriétaire</span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> MyError<span style="color:#008080">(</span>Exception<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">pass</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># attributs de la classe</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># non déclarés - peuvent être créés dynamiquement</span></span>
+<span class="odt-code-line">    </span>
+<span class="odt-code-line">    <span style="color:#008000"># constructeur</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>age<span style="color:#008080">=</span>0<span style="color:#008080">):</span></span>
+<span class="odt-code-line">         <span style="color:#008000"># le prénom doit être non vide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\S+)\s*$&quot;</span><span style="color:#008080">,</span>prenom<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;Le prenom ne peut etre vide&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># le nom doit être non vide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\S+)\s*$&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;Le nom ne peut etre vide&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>nom<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line">            <span style="color:#008000"># l&#x27;âge doit être valide</span></span>
+<span class="odt-code-line">        match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\d+)\s*$&quot;</span><span style="color:#008080">,</span>str<span style="color:#008080">(</span>age<span style="color:#008080">))</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;l&#x27;age doit etre un entier positif&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            self<span style="color:#0000ff">.</span>age<span style="color:#008080">=</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">]</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> initWithPersonne<span style="color:#008080">(</span>self<span style="color:#008080">,</span>p<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># initialise l&#x27;objet courant avec une personne p</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>__init__<span style="color:#008080">(</span>p<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>p<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>p<span style="color:#0000ff">.</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __str__<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line">      </span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># un objet Personne</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p0<span style="color:#008080">=</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;  Paul  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  Langevin  &quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p0<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+<span class="odt-code-line"># un autre objet Personne</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p1<span style="color:#008080">=</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;  xx  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  yy  &quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;  zz&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p1<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+<span class="odt-code-line"># une autre personne</span>
+<span class="odt-code-line">p2<span style="color:#008080">=</span>Personne<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    p2<span style="color:#0000ff">.</span>initWithPersonne<span style="color:#008080">(</span>p0<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;personne={0}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>p2<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> erreur</span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>la différence avec le script précédent est en lignes 35-37. On a rajouté la méthode <em>initWithPersonne.</em> Celle-ci fait appel au constructeur <em>__init__</em>. Il n&#x27;y a pas possibilité d&#x27;avoir, comme dans les langages typés, des méthodes de même nom différenciées par la nature de leurs paramètres ou de leur résultat. Il n&#x27;y a donc pas possibilité d&#x27;avoir plusieurs constructeurs qui construiraient l&#x27;objet à partir de paramètres différents, ici un objet de type <em>Personne</em>.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>personne=[Paul,Langevin,48]
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>l&#39;age doit etre un entier positif
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>personne=[Paul,Langevin,48]
+</code></pre></div></td></tr></table></div>
+<p><a id="refheading382862423505"></a></p>
+<h2 id="56-une-liste-dobjets-personne">5.6. Une liste d&#x27;objets Personne</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_06)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-markdown">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008080">...</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># création d&#x27;une liste d&#x27;objets personne</span>
+<span class="odt-code-line">groupe<span style="color:#008080">=[</span>Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;Paul&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Langevin&quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">),</span> Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;Sylvie&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Lefur&quot;</span><span style="color:#008080">,</span>70<span style="color:#008080">)]</span></span>
+<span class="odt-code-line"># identité de ces personnes</span>
+<span class="odt-code-line"><span style="color:#0000ff">for</span> i <span style="color:#0000ff">in</span> range<span style="color:#008080">(</span>len<span style="color:#008080">(</span>groupe<span style="color:#008080">)):</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;groupe[{0}]={1}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>i<span style="color:#008080">,</span>groupe<span style="color:#008080">[</span>i<span style="color:#008080">])</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 3-5 : la classe <em>Personne</em> déjà décrite</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>groupe[0]=[Paul,Langevin,48]
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>groupe[1]=[Sylvie,Lefur,70]
+</code></pre></div>
+<p><a id="refheading382882423505"></a></p>
+<h2 id="57-creation-dune-classe-derivee-de-la-classe-personne">5.7. Création d&#x27;une classe dérivée de la classe Personne</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_07)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008080">...</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Enseignant<span style="color:#008080">(</span>Personne<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>age<span style="color:#008080">=</span>0<span style="color:#008080">,</span>discipline<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">):</span></span>
+<span class="odt-code-line">        Personne<span style="color:#0000ff">.</span>__init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">,</span>nom<span style="color:#008080">,</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>discipline<span style="color:#008080">=</span>discipline</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __str__<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2},{3}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>discipline<span style="color:#008080">)</span></span>
+<span class="odt-code-line">  </span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># création d&#x27;une liste d&#x27;objets Personne et dérivés</span>
+<span class="odt-code-line">groupe<span style="color:#008080">=[</span>Enseignant<span style="color:#008080">(</span><span style="color:#a31515">&quot;Paul&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Langevin&quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">,</span><span style="color:#a31515">&quot;anglais&quot;</span><span style="color:#008080">),</span> Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;Sylvie&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Lefur&quot;</span><span style="color:#008080">,</span>70<span style="color:#008080">)]</span></span>
+<span class="odt-code-line"># identité de ces personnes</span>
+<span class="odt-code-line"><span style="color:#0000ff">for</span> i <span style="color:#0000ff">in</span> range<span style="color:#008080">(</span>len<span style="color:#008080">(</span>groupe<span style="color:#008080">)):</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;groupe[{0}]={1}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>i<span style="color:#008080">,</span>groupe<span style="color:#008080">[</span>i<span style="color:#008080">])</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 5-6 : la classe <em>Personne</em> déjà définie ;</li>
+<li>ligne 8 : déclare la classe <em>Enseignant</em> comme étant une classe dérivée de la classe <em>Personne ;</em></li>
+<li>ligne 10 : le constructeur de la classe dérivée <em>Enseignant</em> doit appeler le constructeur de la classe parent <em>Personne</em> ;</li>
+<li>lignes 21-22 : pour afficher groupe[i], l&#x27;interpréteur utilise la méthode <em>groupe[i].__str__()</em>. La méthode <em>__str__()</em> utilisée est celle de la classe réelle de <em>groupe[i]</em> comme  le montrent les résultats ci-dessous.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>groupe[0]=[Paul,Langevin,48,anglais]
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>groupe[1]=[Sylvie,Lefur,70]
+</code></pre></div>
+<p><a id="refheading382902423505"></a></p>
+<h2 id="58-creation-dune-seconde-classe-derivee-de-la-classe-personne">5.8. Création d&#x27;une seconde classe dérivée de la classe Personne</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (classes_08)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Personne<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008080">...</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Enseignant<span style="color:#008080">(</span>Personne<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    ...</span>
+<span class="odt-code-line">  </span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Etudiant<span style="color:#008080">(</span>Personne<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>nom<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">,</span>age<span style="color:#008080">=</span>0<span style="color:#008080">,</span>formation<span style="color:#008080">=</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">):</span></span>
+<span class="odt-code-line">        Personne<span style="color:#0000ff">.</span>__init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>prenom<span style="color:#008080">,</span>nom<span style="color:#008080">,</span>age<span style="color:#008080">)</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>formation<span style="color:#008080">=</span>formation</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __str__<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> <span style="color:#a31515">&quot;[{0},{1},{2},{3}]&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>self<span style="color:#0000ff">.</span>prenom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>nom<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>age<span style="color:#008080">,</span>self<span style="color:#0000ff">.</span>formation<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ---------------------------------- main</span>
+<span class="odt-code-line"># création d&#x27;une liste d&#x27;objets Personne et dérivés</span>
+<span class="odt-code-line">groupe<span style="color:#008080">=[</span>Enseignant<span style="color:#008080">(</span><span style="color:#a31515">&quot;Paul&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Langevin&quot;</span><span style="color:#008080">,</span>48<span style="color:#008080">,</span><span style="color:#a31515">&quot;anglais&quot;</span><span style="color:#008080">),</span> Personne<span style="color:#008080">(</span><span style="color:#a31515">&quot;Sylvie&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Lefur&quot;</span><span style="color:#008080">,</span>70<span style="color:#008080">),</span> Etudiant<span style="color:#008080">(</span><span style="color:#a31515">&quot;Steve&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;Boer&quot;</span><span style="color:#008080">,</span>22<span style="color:#008080">,</span><span style="color:#a31515">&quot;iup2 qualite&quot;</span><span style="color:#008080">)]</span></span>
+<span class="odt-code-line"># identité de ces personnes</span>
+<span class="odt-code-line"><span style="color:#0000ff">for</span> i <span style="color:#0000ff">in</span> range<span style="color:#008080">(</span>len<span style="color:#008080">(</span>groupe<span style="color:#008080">)):</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;groupe[{0}]={1}&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>i<span style="color:#008080">,</span>groupe<span style="color:#008080">[</span>i<span style="color:#008080">])</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>ce script est analogue au précédent.</li>
+</ul>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Résultats</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>groupe[0]=[Paul,Langevin,48,anglais]
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>groupe[1]=[Sylvie,Lefur,70]
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>groupe[2]=[Steve,Boer,22,iup2 qualite]
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://tahe.developpez.com" target="_blank">
+          https://tahe.developpez.com
+        </a>
+        <br>
+        Ce cours-tutoriel écrit par <strong>Serge Tahé</strong> est mis à disposition du public selon les termes de la
+        <em>Licence Creative Commons Attribution – Pas d’Utilisation Commerciale –
+        Partage dans les Mêmes Conditions 3.0 non transposé</em>.
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

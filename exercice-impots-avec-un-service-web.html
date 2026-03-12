@@ -1,0 +1,1062 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction au langage Python 2.7 par l'exemple">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/python2.7-mars-2012/exercice-impots-avec-un-service-web.html">
+      
+      
+        <link rel="prev" href="des-services-web-en-python.html">
+      
+      
+        <link rel="next" href="traitement-de-documents-xml.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>13. Exercice [IMPOTS] avec un service WEB - Introduction au langage Python 2.7 par l'exemple</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Introduction au langage Python 2.7 par l'exemple";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#13-exercice-impots-avec-un-service-web" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-header__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction au langage Python 2.7 par l'exemple
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              13. Exercice [IMPOTS] avec un service WEB
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-nav__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Introduction au langage Python 2.7 par l'exemple
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="avant-propos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Avant-propos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation-dun-interpreteur-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Installation d'un interpréteur Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-bases.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Les bases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Exercice d'application – [IMPOTS]
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-classes-et-objets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Les classes et objets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-exceptions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Les exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-en-couches-et-programmation-par-interfaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Architecture en couches et programmation par interfaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots-avec-architecture-en-couches.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Exercice d'application - [IMPOTS] avec architecture en couches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilisation-du-sgbd-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Utilisation du SGBD MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Exercice [IMPOTS] avec MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-fonctions-reseau-de-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Les fonctions réseau de Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="des-services-web-en-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Des services web en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Exercice [IMPOTS] avec un service WEB
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="exercice-impots-avec-un-service-web.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Exercice [IMPOTS] avec un service WEB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-le-serveur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1. Le serveur
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-un-client-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2. Un client programmé
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-resultats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3. Résultats
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="traitement-de-documents-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Traitement de documents XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Exercice [IMPOTS] avec XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="refheading383622423505"></a>
+<a id="exo-impots-tcp"></a></p>
+<h1 id="13-exercice-impots-avec-un-service-web">13. Exercice [IMPOTS] avec un service WEB</h1>
+<p>Nous revenons à l&#x27;exercice [IMPOTS] déjà traité aux paragraphes <a href="exercice-dapplication---impots.html#exo-impots-tableaux">4.2</a>, <a href="exercice-dapplication---impots.html#exo-impots-fichiers">4.3</a>, <a href="exercice-dapplication---impots-avec-architecture-en-couches.html#exo-impots-objets">8</a>, <a href="exercice-impots-avec-mysql.html#exo-impots-mysql">10</a>.</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000001BA00000263A64C9C4E.png" style="display:inline-block; margin:4px;width:5.847cm;height:8.084cm;" class="odt-zoomable" data-zoom-src="images/10000000000001BA00000263A64C9C4E.png" /></td></tr></table>
+
+<p><a id="refheading383642423505"></a></p>
+<h2 id="131-le-serveur">13.1. Le serveur</h2>
+<p>Nous nous plaçons dans l&#x27;architecture client-serveur suivante :</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/1000000000000639000000D3E1DBE0F7.png" style="display:inline-block; margin:4px;width:17.997cm;height:2.383cm;" class="odt-zoomable" data-zoom-src="images/1000000000000639000000D3E1DBE0F7.png" /></td></tr></table>
+
+<p>Côté serveur, nous allons utiliser de nouveau une architecture trois couches. La couche [dao] sera implémentée par la classe <em>ImpotsMySQL</em> utilisée dans la version avec le SGBD MySQL au paragraphe <a href="exercice-impots-avec-mysql.html#exo-impots-mysql">10</a>. La couche [metier] sera implémentée par la classe [ImpotsMetier] déjà étudiée. Il ne reste donc qu&#x27;à écrire le service web. Celui-ci reçoit de ses clients un paramètre <em>params</em> sous la forme <em>params=</em> <em>oui,2,200000</em> où le premier élément indique si le contribuable est marié ou non, le deuxième son nombre d&#x27;enfants, le troisième son salaire annuel.</p>
+<p>Le service web est le suivant (impots_web_01) :</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line">#!D:\Programs\ActivePython\Python2.7.2\python.exe</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># -*- coding=Utf-8 -*-</span>
+<span class="odt-code-line"># import du module des classes Impots*</span>
+<span class="odt-code-line"><span style="color:#0000ff">from</span> impots <span style="color:#0000ff">import</span> <span style="color:#008080">*</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> cgi<span style="color:#008080">,</span>cgitb<span style="color:#008080">,</span>re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on autorise l&#x27;affichage d&#x27;informations de débogage</span>
+<span class="odt-code-line">cgitb<span style="color:#0000ff">.</span>enable<span style="color:#008080">()</span></span>
+<span class="odt-code-line">sys<span style="color:#0000ff">.</span>stderr<span style="color:#008080">=</span>sys<span style="color:#0000ff">.</span>stdout</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># ------------------------------------------------ </span>
+<span class="odt-code-line"># le service web des impôts</span>
+<span class="odt-code-line"># ------------------------------------------------ </span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># les données nécessaires au calcul de l&#x27;impôt ont été placées dans la table mysqL TABLE</span>
+<span class="odt-code-line"># appartenant à la base BASE. La table a la structure suivante</span>
+<span class="odt-code-line"># limites decimal(10,2), coeffR decimal(6,2), coeffN decimal(10,2)</span>
+<span class="odt-code-line"># les paramètres des personnes imposables (statut marital, nombre d&#x27;enfants, salaire annuel)</span>
+<span class="odt-code-line"># sont envoyés par le client sous la forme params=statut marital, nombre d&#x27;enfants, salaire annuel</span>
+<span class="odt-code-line"># les résultats (statut marital, nombre d&#x27;enfants, salaire annuel, impôt à payer) sont renvoyés au client</span>
+<span class="odt-code-line"># sous la forme &lt;impot&gt;valeur&lt;/impot&gt;</span>
+<span class="odt-code-line"># ou sous la forme &lt;erreur&gt;msg&lt;/erreur&gt;, si les paramètres sont invalides</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># le serveur renvoie au client du texte non formaté</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;Content-Type: text/plain\n&quot;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># définition des constantes</span>
+<span class="odt-code-line">USER<span style="color:#008080">=</span><span style="color:#a31515">&quot;root&quot;</span></span>
+<span class="odt-code-line">PWD<span style="color:#008080">=</span><span style="color:#a31515">&quot;&quot;</span></span>
+<span class="odt-code-line">HOTE<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">BASE<span style="color:#008080">=</span><span style="color:#a31515">&quot;dbimpots&quot;</span></span>
+<span class="odt-code-line">TABLE<span style="color:#008080">=</span><span style="color:#a31515">&quot;impots&quot;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on crée la couche [metier]</span>
+<span class="odt-code-line"># Python ne semble pas avoir de support pour les sessions</span>
+<span class="odt-code-line"># en PHP, on aurait utilisé une session pour mémoriser l&#x27;objet metier</span>
+<span class="odt-code-line"># ici, on le construit systématiquement à partir des données de la base de données MySQL</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># instanciation couche [metier]</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    metier<span style="color:#008080">=</span>ImpotsMetier<span style="color:#008080">(</span>ImpotsMySQL<span style="color:#008080">(</span>HOTE<span style="color:#008080">,</span>USER<span style="color:#008080">,</span>PWD<span style="color:#008080">,</span>BASE<span style="color:#008080">,</span>TABLE<span style="color:#008080">))</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> <span style="color:#008080">(</span>IOError<span style="color:#008080">,</span> ImpotsError<span style="color:#008080">)</span> <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;&lt;erreur&gt;Une erreur s&#x27;est produite : {0}&lt;/erreur&gt;&quot;</span><span style="color:#0000ff">.</span>format<span style="color:#008080">(</span>infos<span style="color:#008080">))</span></span>
+<span class="odt-code-line">    sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on récupère la ligne envoyée par le client au serveur</span>
+<span class="odt-code-line">params<span style="color:#008080">=</span>cgi<span style="color:#0000ff">.</span>FieldStorage<span style="color:#008080">()</span><span style="color:#0000ff">.</span>getlist<span style="color:#008080">(</span><span style="color:#a31515">&#x27;params&#x27;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"># si pas de paramètres alors erreur</span>
+<span class="odt-code-line"><span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> params<span style="color:#008080">:</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;erreur&gt;Le parametre [params] est absent&lt;erreur&gt;&quot;</span></span>
+<span class="odt-code-line">  sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on exploite le paramètre params  </span>
+<span class="odt-code-line">items<span style="color:#008080">=</span>params<span style="color:#008080">[</span>0<span style="color:#008080">]</span><span style="color:#0000ff">.</span>strip<span style="color:#008080">()</span><span style="color:#0000ff">.</span>lower<span style="color:#008080">()</span><span style="color:#0000ff">.</span>split<span style="color:#008080">(</span><span style="color:#a31515">&#x27;,&#x27;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"># il ne doit y avoir que 3 champs</span>
+<span class="odt-code-line"><span style="color:#0000ff">if</span> len<span style="color:#008080">(</span>items<span style="color:#008080">)!=</span>3<span style="color:#008080">:</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;erreur&gt;[%s] : nombre de parametres invalide&lt;/erreur&gt;&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">  sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># le premier paramètre (statut marital) doit être oui/non</span>
+<span class="odt-code-line">marie<span style="color:#008080">=</span>items<span style="color:#008080">[</span>0<span style="color:#008080">]</span><span style="color:#0000ff">.</span>strip<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">if</span> marie<span style="color:#008080">!=</span><span style="color:#a31515">&quot;oui&quot;</span> <span style="color:#0000ff">and</span> marie <span style="color:#008080">!=</span> <span style="color:#a31515">&quot;non&quot;</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;erreur&gt;[%s] : 1er parametre invalide&lt;/erreur&gt;\n&quot;</span><span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">  sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># le second paramètre (nbre d&#x27;enfants) doit être un nombre entier</span>
+<span class="odt-code-line">match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\d+)\s*$&quot;</span><span style="color:#008080">,</span>items<span style="color:#008080">[</span>1<span style="color:#008080">])</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;erreur&gt;[%s] : 2ieme parametre invalide&lt;/erreur&gt;\n&quot;</span><span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">  sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line">enfants<span style="color:#008080">=</span>int<span style="color:#008080">(</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line"># le troisième paramètre (salaire) doit être un nombre entier</span>
+<span class="odt-code-line">match<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^\s*(\d+)\s*$&quot;</span><span style="color:#008080">,</span>items<span style="color:#008080">[</span>2<span style="color:#008080">])</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">if</span> <span style="color:#0000ff">not</span> match<span style="color:#008080">:</span></span>
+<span class="odt-code-line">  <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;erreur&gt;[%s] : 3ieme parametre invalide&lt;/erreur&gt;\n&quot;</span><span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">  sys<span style="color:#0000ff">.</span>exit<span style="color:#008080">()</span></span>
+<span class="odt-code-line">salaire<span style="color:#008080">=</span>int<span style="color:#008080">(</span>match<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line"># on calcule l&#x27;impôt</span>
+<span class="odt-code-line">impot<span style="color:#008080">=</span>metier<span style="color:#0000ff">.</span>calculer<span style="color:#008080">(</span>marie<span style="color:#008080">,</span>enfants<span style="color:#008080">,</span>salaire<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># on renvoie le résultat</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;&lt;impot&gt;%s&lt;/impot&gt;\n&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>impot<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># fin</span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+  <li>ligne 5 : on importe les objets du fichier <i>impots.py ;</i>
+  </li>
+  <li>ligne 9 : déboguer un script Cgi peut être problématique. Le module <i>cgitb</i> envoie, en cas d&#x27;erreur, la raison du plantage. Pour cela, il faut rediriger la sortie erreur standard (<i>sys.stderr</i>) vers la sortie standard (<i>sys.stdout</i>) (ligne 10) ;
+  </li>
+  <li>ligne 26 : l&#x27;entête Http qui fixe la nature du document envoyé, ici un texte non formaté. Le service web renvoie sa réponse sous forme d&#x27;une unique ligne de texte :
+    <ul>
+      <li><i>&lt;erreur&gt;message&lt;/erreur&gt;</i> s&#x27;il y a une erreur ;
+      </li>
+      <li><i>&lt;impot&gt;valeur&lt;/impot&gt;</i> où <i>valeur</i> est le montant de l&#x27;impôt.
+      </li>
+    </ul>
+  </li>
+  <li>ligne 43: instanciation des couches [dao] et [metier] ;
+  </li>
+  <li>lignes 44-46 : en cas d&#x27;erreur de l&#x27;instanciation, le script envoie sa réponse et se termine ;
+  </li>
+  <li>lignes 49-53 : le paramètre &#x27;params&#x27; est récupéré. S&#x27;il est absent, le script envoie sa réponse et se termine ;
+  </li>
+  <li>ligne 56 : le paramètre &#x27;oui,2,200000&#x27; est décomposé en 3 champs dans le tableau <i>items ;</i>
+  </li>
+  <li>lignes 58-77 : la validité des 3 champs est vérifiée. S&#x27;il y a une erreur, le script envoie sa réponse et se termine ;
+  </li>
+  <li>ligne 79 : l&#x27;impôt est calculé ;
+  </li>
+  <li>ligne 81 : et envoyé au client.
+  </li>
+</ul>
+
+<p>Dans un navigateur web, on obtient les résultats suivants :</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/100000000000018800000076AFA8BDEA.png" style="display:inline-block; margin:4px;width:7.26cm;height:2.191cm;" class="odt-zoomable" data-zoom-src="images/100000000000018800000076AFA8BDEA.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000001800000008EA92CB0A3.png" style="display:inline-block; margin:4px;width:7.11cm;height:2.63cm;" class="odt-zoomable" data-zoom-src="images/10000000000001800000008EA92CB0A3.png" /></td></tr></table>
+
+<p><a id="refheading383662423505"></a></p>
+<h2 id="132-un-client-programme">13.2. Un client programmé</h2>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (client_impots_web_01)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> httplib<span style="color:#008080">,</span>urllib<span style="color:#008080">,</span>re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># constantes</span>
+<span class="odt-code-line">HOST<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">URL<span style="color:#008080">=</span><span style="color:#a31515">&quot;/cgi-bin/impots_web_01b.py&quot;</span></span>
+<span class="odt-code-line">data<span style="color:#008080">=(</span><span style="color:#a31515">&quot;oui,2,200000&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;non,2,200000&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;oui,3,200000&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;non,3,200000&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;x,y,z,t&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;x,2,200000&quot;</span><span style="color:#008080">,</span> <span style="color:#a31515">&quot;oui,x,200000&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;oui,2,x&quot;</span><span style="color:#008080">);</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># connexion</span>
+<span class="odt-code-line">connexion<span style="color:#008080">=</span>httplib<span style="color:#0000ff">.</span>HTTPConnection<span style="color:#008080">(</span>HOST<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># suivi</span>
+<span class="odt-code-line">#connexion.set_debuglevel(1)</span>
+<span class="odt-code-line"># on boucle sur les données à envoyer au serveur</span>
+<span class="odt-code-line"><span style="color:#0000ff">for</span> params <span style="color:#0000ff">in</span> data<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># les paramètres doivent être encodés avant d&#x27;être envoyés au serveur</span></span>
+<span class="odt-code-line">    parametres <span style="color:#008080">=</span> urllib<span style="color:#0000ff">.</span>urlencode<span style="color:#008080">({</span><span style="color:#a31515">&#x27;params&#x27;</span><span style="color:#008080">:</span> params<span style="color:#008080">})</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># envoi de la requête</span></span>
+<span class="odt-code-line">    connexion<span style="color:#0000ff">.</span>request<span style="color:#008080">(</span><span style="color:#a31515">&quot;POST&quot;</span><span style="color:#008080">,</span>URL<span style="color:#008080">,</span>parametres<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># traitement de la réponse (ligne de texte)</span></span>
+<span class="odt-code-line">    reponse<span style="color:#008080">=</span>connexion<span style="color:#0000ff">.</span>getresponse<span style="color:#008080">()</span><span style="color:#0000ff">.</span>read<span style="color:#008080">()</span></span>
+<span class="odt-code-line">    lignes<span style="color:#008080">=</span>reponse<span style="color:#0000ff">.</span>split<span style="color:#008080">(</span><span style="color:#a31515">&quot;\n&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># la ligne de texte est de la forme</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># &lt;impot&gt;xxx&lt;/impot&gt;</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># ou &lt;erreur&gt;xxx&lt;/erreur&gt;</span></span>
+<span class="odt-code-line">    impot<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^&lt;impot&gt;(\S+)&lt;/impot&gt;\s*$&quot;</span><span style="color:#008080">,</span>lignes<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">if</span> impot<span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;params=%s, impot=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">,</span>impot<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">        erreur<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^&lt;erreur&gt;(.+)&lt;/erreur&gt;\s*$&quot;</span><span style="color:#008080">,</span>lignes<span style="color:#008080">[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">if</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;params=%s, erreur=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>params<span style="color:#008080">,</span>erreur<span style="color:#0000ff">.</span>groups<span style="color:#008080">()[</span>0<span style="color:#008080">])</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">            <span style="color:#0000ff">print</span> lignes</span>
+<span class="odt-code-line"># fermeture connexion</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>close<span style="color:#008080">()</span></span>
+</code></pre></div>
+
+<p><a id="refheading383682423505"></a></p>
+<h2 id="133-resultats">13.3. Résultats</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>params=oui,2,200000, impot=22504.0
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>params=non,2,200000, impot=33388.0
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>params=oui,3,200000, impot=16400.0
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>params=non,3,200000, impot=22504.0
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>params=x,y,z,t, erreur=[x,y,z,t] : nombre de parametres invalide
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>params=x,2,200000, erreur=[x,2,200000] : 1er parametre invalide
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>params=oui,x,200000, erreur=[oui,x,200000] : 2ieme parametre invalide
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>params=oui,2,x, erreur=[oui,2,x] : 3ieme parametre invalide
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://tahe.developpez.com" target="_blank">
+          https://tahe.developpez.com
+        </a>
+        <br>
+        Ce cours-tutoriel écrit par <strong>Serge Tahé</strong> est mis à disposition du public selon les termes de la
+        <em>Licence Creative Commons Attribution – Pas d’Utilisation Commerciale –
+        Partage dans les Mêmes Conditions 3.0 non transposé</em>.
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

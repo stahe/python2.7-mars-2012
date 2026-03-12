@@ -1,0 +1,1581 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction au langage Python 2.7 par l'exemple">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/python2.7-mars-2012/des-services-web-en-python.html">
+      
+      
+        <link rel="prev" href="les-fonctions-reseau-de-python.html">
+      
+      
+        <link rel="next" href="exercice-impots-avec-un-service-web.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>12. Des services web en Python - Introduction au langage Python 2.7 par l'exemple</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Introduction au langage Python 2.7 par l'exemple";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#12-des-services-web-en-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-header__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction au langage Python 2.7 par l'exemple
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              12. Des services web en Python
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-nav__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Introduction au langage Python 2.7 par l'exemple
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="avant-propos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Avant-propos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation-dun-interpreteur-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Installation d'un interpréteur Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-bases.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Les bases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Exercice d'application – [IMPOTS]
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-classes-et-objets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Les classes et objets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-exceptions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Les exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-en-couches-et-programmation-par-interfaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Architecture en couches et programmation par interfaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots-avec-architecture-en-couches.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Exercice d'application - [IMPOTS] avec architecture en couches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilisation-du-sgbd-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Utilisation du SGBD MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Exercice [IMPOTS] avec MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-fonctions-reseau-de-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Les fonctions réseau de Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Des services web en Python
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="des-services-web-en-python.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Des services web en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#121-application-client-serveur-de-dateheure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1. Application client/ serveur de date/heure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.1. Application client/ serveur de date/heure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1211-le-serveur" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1.1. Le serveur
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1212-deux-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1.2. Deux tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1213-un-client-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1.3. Un client programmé
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1214-resultats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1.4. Résultats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#122-recuperation-par-le-serveur-des-parametres-envoyes-par-le-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2. Récupération par le serveur des paramètres envoyés par le client
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.2. Récupération par le serveur des paramètres envoyés par le client">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1221-le-service-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2.1. Le service web
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1222-le-client-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2.2. Le client GET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1223-les-resultats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2.3. Les résultats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1224-le-client-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2.4. Le client POST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1225-les-resultats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2.5. Les résultats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#123-recuperation-des-variables-denvironnement-dun-service-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3. Récupération des variables d&#x27;environnement d&#x27;un service web
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12.3. Récupération des variables d&#39;environnement d&#39;un service web">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1231-le-service-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3.1. Le service web
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1232-le-client-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3.2. Le client programmé
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1233-resultats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3.3. Résultats
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-un-service-web.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Exercice [IMPOTS] avec un service WEB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="traitement-de-documents-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Traitement de documents XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Exercice [IMPOTS] avec XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="refheading383302423505"></a></p>
+<h1 id="12-des-services-web-en-python">12. Des services web en Python</h1>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000000E30000014CB0D83B1A.png" style="display:inline-block; margin:4px;width:4.2cm;height:6.151cm;" class="odt-zoomable" data-zoom-src="images/10000000000000E30000014CB0D83B1A.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td></tr></table>
+
+<p>Les scripts Python peuvent être exécutés par un serveur WEB. C&#x27;est ce dernier qui sera à l&#x27;écoute des demandes clientes. Du point de vue du client, appeler un service WEB revient à demander l&#x27;URL de ce service. Le client peut être écrit avec n&#x27;importe quel langage, notamment en Python. Il nous faut savoir &quot;converser&quot; avec un service WEB, c&#x27;est à dire comprendre le protocole <em>Http</em> de communication entre un serveur Web et ses clients. C&#x27;est le but des programmes qui suivent.</p>
+<p>Les scripts de service web seront exécutés par le serveur web Apache de <em>WampServer</em>. Il faut les placer dans un répertoire particulier : <a id="cgi-bin"></a><em>&lt;WampServer&gt;\bin\apache\apachex.y.z\cgi-bin</em> où <em>&lt;WampServer&gt;</em> est le dossier d&#x27;installation de <em>WampServer</em> et <em>x.y.z</em> est la version du serveur web Apache.</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/100000000000012C0000012593D08DD1.png" style="display:inline-block; margin:4px;width:5.56cm;height:5.429cm;" class="odt-zoomable" data-zoom-src="images/100000000000012C0000012593D08DD1.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td></tr></table>
+
+<p>Placer les scripts Python dans le dossier &lt;cgi-bin&gt; n&#x27;est pas suffisant. Il faut que le script indique en première ligne le chemin de l&#x27;interpréteur Python à utiliser. Ce chemin est mis sous la forme d&#x27;un commentaire :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#!D:\Programs\ActivePython\Python2.7.2\python.exe
+</code></pre></div>
+<p>Le lecteur adaptera ce chemin à son propre environnement.</p>
+<p><a id="refheading383322423505"></a></p>
+<h2 id="121-application-client-serveur-de-dateheure">12.1. Application client/ serveur de date/heure</h2>
+<p>Notre premier service web sera un service de date et heure : le client reçoit la date et l&#x27;heure courantes.</p>
+<p><a id="refheading383342423505"></a></p>
+<h3 id="1211-le-serveur">12.1.1. Le serveur</h3>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (web_02)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line">#!D:\Programs\ActivePython\Python2.7.2\python.exe</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> time</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># headers</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;Content-Type: text/plain\n&quot;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># envoi heure au client</span>
+<span class="odt-code-line">  <span style="color:#008000"># localtime : nb de millisecondes depuis 01/01/1970</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># &quot;format affichage date-heure</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># d: jour sur 2 chiffres</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># m: mois sur 2 chiffres</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># y : année sur 2 chiffres</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># H : heure 0,23</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># M : minutes</span></span>
+<span class="odt-code-line">  <span style="color:#008000"># S: secondes</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> time<span style="color:#0000ff">.</span>strftime<span style="color:#008080">(</span><span style="color:#a31515">&#x27;%d/%m/%y %H:%M:%S&#x27;</span><span style="color:#008080">,</span>time<span style="color:#0000ff">.</span>localtime<span style="color:#008080">())</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>ligne 6 : le script doit générer lui-même certains des entêtes Http de la réponse au client. Ils viendront s&#x27;ajouter aux entêtes Http générés par le serveur Apache lui-même. L&#x27;entête Http de la ligne 6 indique au client qu&#x27;on va lui envoyer une ressource au format <em>text/plain</em>, c&#x27;est à dire du texte non formaté. On notera le &quot;\n&quot; à la fin de l&#x27;entête qui va générer une ligne vide derrière l&#x27;entête. C&#x27;est obligatoire : c&#x27;est cette ligne vide qui signale au client Http la fin des entêtes Http de la réponse. Vient ensuite la ressource demandée par le client, ici un texte non formaté ;</li>
+<li>ligne 18 : la ressource envoyée au client est un texte affichant la date et l&#x27;heure courantes.</li>
+</ul>
+<p><a id="refheading383362423505"></a></p>
+<h3 id="1212-deux-tests">12.1.2. Deux tests</h3>
+<p>Le script précédent peut être exécuté directement par l&#x27;interpréteur Python dans une fenêtre de commandes comme nous l&#x27;avons fait jusqu&#x27;à maintenant. Cela permet d&#x27;éléminer d&#x27;éventuelles erreurs de syntaxe ou de fonctionnement. On obtient le résultat suivant :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>cmd&gt;%python% web_02.py
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>Content-Type: text/plain
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>24/06/11 11:16:55
+</code></pre></div></td></tr></table></div>
+<p>Lorsque le script a été ainsi testé, on peut le placer dans le dossier &lt;<em>cgi-bin</em>&gt; du serveur Apache (cf paragraphe <a href="#cgi-bin">12</a>). Lançons l&#x27;application <em>WampServer</em>. Cela lance à la fois un serveur web Apache et un sgbd MySQL. Nous n&#x27;utiliserons pour le moment que le serveur web. Puis avec un navigateur, demandons l&#x27;URL suivante : <em>http://localhost/cgi-bin/web_02.py</em> :</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/100000000000054B0000010447CAD873.png" style="display:inline-block; margin:4px;width:17.926cm;height:3.44cm;" class="odt-zoomable" data-zoom-src="images/100000000000054B0000010447CAD873.png" /></td></tr></table>
+
+<ul>
+<li>en [1] : l&#x27;URL demandée ;</li>
+<li>en [2] : la réponse affichée par le navigateur ;</li>
+<li>en [3] : le code source reçu par le navigateur web. C&#x27;est bien celui envoyé par le script Python.</li>
+</ul>
+<p>Avec certains outils (ici Firebug, un plugin du navigateur Firefox) on peut avoir accès aux entêtes Http échangés avec le serveur. Ci-dessus, le navigateur web a reçu les entêtes Http suivants :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span>
+<span class="normal"><a href="#__codelineno-2-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>HTTP/1.1 200 OK
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>Date: Fri, 24 Jun 2011 09:35:02 GMT
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>Server: Apache/2.2.6 (Win32) PHP/5.2.5
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>Keep-Alive: timeout=5, max=100
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>Connection: Keep-Alive
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>Transfer-Encoding: chunked
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>Content-Type: text/plain
+</code></pre></div></td></tr></table></div>
+<p>On reconnaît lignes 7-8, l&#x27;entête Http envoyé par le script Python. Ceux qui précèdent ont été générés par le serveur web Apache.</p>
+<p><a id="refheading383382423505"></a></p>
+<h3 id="1213-un-client-programme">12.1.3. Un client programmé</h3>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (client_web_02)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+<p>On écrit maintenant un script qui sera client du service web précédent. On utilise les fonctionnalités du module <em>httplib</em> qui facilite l&#x27;écriture de clients Http.</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> httplib<span style="color:#008080">,</span>re</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># constantes</span>
+<span class="odt-code-line">HOST<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">URL<span style="color:#008080">=</span><span style="color:#a31515">&quot;/cgi-bin/web_02.py&quot;</span></span>
+<span class="odt-code-line"># connexion</span>
+<span class="odt-code-line">connexion<span style="color:#008080">=</span>httplib<span style="color:#0000ff">.</span>HTTPConnection<span style="color:#008080">(</span>HOST<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># suivi</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>set_debuglevel<span style="color:#008080">(</span>1<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># envoi de la requête</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>request<span style="color:#008080">(</span><span style="color:#a31515">&quot;GET&quot;</span><span style="color:#008080">,</span> URL<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># traitement de la réponse</span>
+<span class="odt-code-line">reponse<span style="color:#008080">=</span>connexion<span style="color:#0000ff">.</span>getresponse<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># contenu</span>
+<span class="odt-code-line">contenu<span style="color:#008080">=</span>reponse<span style="color:#0000ff">.</span>read<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># fermeture connexion</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>close<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;------\n&quot;</span><span style="color:#008080">,</span>contenu<span style="color:#008080">,</span><span style="color:#a31515">&quot;-----\n&quot;</span></span>
+<span class="odt-code-line"># récupération des éléments de l&#x27;heure</span>
+<span class="odt-code-line">elements<span style="color:#008080">=</span>re<span style="color:#0000ff">.</span>match<span style="color:#008080">(</span><span style="color:#a31515">r&quot;^(\d\d)/(\d\d)/(\d\d) (\d\d):(\d\d):(\d\d)\s*$&quot;</span><span style="color:#008080">,</span>contenu<span style="color:#008080">)</span><span style="color:#0000ff">.</span>groups<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;Jour=%s,Mois=%s,An=%s,Heures=%s,Minutes=%s,Secondes=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>elements<span style="color:#008080">[</span>0<span style="color:#008080">],</span>elements<span style="color:#008080">[</span>1<span style="color:#008080">],</span>elements<span style="color:#008080">[</span>2<span style="color:#008080">],</span>elements<span style="color:#008080">[</span>3<span style="color:#008080">],</span>elements<span style="color:#008080">[</span>4<span style="color:#008080">],</span>elements<span style="color:#008080">[</span>5<span style="color:#008080">])</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>ligne 3 : le module <em>re</em> est nécessaire aux expression régulières, le module <em>httplib</em> aux fonctions des clients Http ;</li>
+<li>ligne 9 : une connexion Http est créée avec le port 80 de HOST défini ligne 6 ;</li>
+<li>ligne 11 : le suivi permet de voir les entêtes http de la demande du client et de la réponse du serveur ;</li>
+<li>ligne 13 : l&#x27;URL du service web est demandée. Il y a deux façons de la demander : à l&#x27;aide d&#x27;une commande Http GET ou POST. La différence entre les deux est expliquée plus loin. Ici elle sera demandée avec la commande Http GET ;</li>
+<li>ligne 15 : la réponse du serveur est lue. C&#x27;est l&#x27;ensemble de la réponse qui est ici obtenue : entêtes Http et ressource demandée par le client. Dans sa réponse, le serveur a pu demander au client de se rediriger. Dans ce cas, le client <em>httplib</em> fait automatiquement la redirection. La réponse obtenue est donc celle issue de la redirection ;</li>
+<li>ligne 17 : la réponse est composée des entêtes Http et du document demandé par le client. Pour obtenir seulement les entêtes Http, on utilisera <em>[reponse].getHeaders()</em>. Pour obtenir le document, on utilise <em>[reponse].read() ;</em></li>
+<li>ligne 19 : une fois obtenue la réponse du serveur web, la connexion à celui-ci est fermée ;</li>
+<li>on sait que le document envoyé par le serveur est une ligne de texte de la forme 15/06/11 14:56:36. Lignes 22-26, on utilise une expression régulière pour récupérer les différents éléments de cette ligne.</li>
+</ul>
+<p><a id="refheading383402423505"></a></p>
+<h3 id="1214-resultats">12.1.4. Résultats</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>send: &#39;GET /cgi-bin/web_02.py HTTP/1.1\r\nHost: localhost\r\nAccept-Encoding: identity\r\n\r\n&#39;
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>reply: &#39;HTTP/1.1 200 OK\r\n&#39;
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>header: Date: Tue, 14 Feb 2012 14:51:07 GMT
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>header: Server: Apache/2.2.17 (Win32) PHP/5.3.5
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>header: Transfer-Encoding: chunked
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>header: Content-Type: text/plain
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>------
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>14/02/12 15:51:07
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>-----
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>Jour=14,Mois=02,An=12,Heures=15,Minutes=51,Secondes=07
+</code></pre></div></td></tr></table></div>
+<p>Notes :</p>
+<ul>
+<li>ligne 1 : les entêtes Http envoyés par le client au serveur web ;</li>
+<li>lignes 2-6 : les entêtes Http de la réponse du serveur web ;</li>
+<li>ligne 8 : le document envoyé par le serveur ;</li>
+<li>ligne 11 : le résultat de son exploitation ;</li>
+</ul>
+<p><a id="refheading383422423505"></a></p>
+<h2 id="122-recuperation-par-le-serveur-des-parametres-envoyes-par-le-client">12.2. Récupération par le serveur des paramètres envoyés par le client</h2>
+<p>Dans le protocole Http, un client a deux méthodes pour passer des paramètres au serveur Web :</p>
+<ol>
+<li>il demande l&#x27;URL du service sous la forme </li>
+</ol>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-style:italic">GET url?param1=val1&amp;param2=val2&amp;param3=val3… </span><span style="font-style:italic">HTTP/1.0</span></span>
+</code></pre></div>
+
+<p>où les valeurs <em>vali</em> doivent être au préalable subir un encodage afin que certains caractères réservés soient remplacés par leur valeur hexadécimale.</p>
+<ol start="2">
+  <li>il demande l&#x27;URL du service sous la forme 
+  </li>
+</ol>
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>POST url HTTP/1.0
+</code></pre></div>
+<p>puis parmi les entêtes Http envoyés au serveur place l&#x27;entête suivant :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Content-length: N
+</code></pre></div>
+<p>La suite des entêtes envoyés par le client se terminent par une ligne vide. Il peut alors envoyer ses données sous la forme</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>val1&amp;param2=val2&amp;param3=val3…
+</code></pre></div>
+<p>où les <em>vali</em> doivent, comme pour la méthode GET, être préalablement encodées. Le nombre de caractères envoyés au serveur doit être N où N est la valeur déclarée dans l&#x27;entête :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Content-length: N
+</code></pre></div>
+<p><a id="refheading383442423505"></a></p>
+<h3 id="1221-le-service-web">12.2.1. Le service web</h3>
+<p>Le service web qui suit reçoit 3 paramètres de son client : <em>nom</em>, <em>prenom</em>, <em>age</em>. Il les récupère dans une sorte de dictionnaire nommé <em>cgi</em>.<em>FieldStorage</em> fourni par le module <em>cgi</em>. La valeur <em>vali</em> d&#x27;un paramètre <em>parami</em> est obtenue par <em>vali=cgi.FieldStorage().getlist(&quot;parami&quot;)</em>. On obtient un tableau de :</p>
+<ul>
+  <li>0 élément si le paramètre <i>parami</i> n&#x27;est pas présent dans la requête du client ;
+  </li>
+  <li>1 élément si le paramètre <i>parami</i> est présent 1 fois dans la requête du client ;
+  </li>
+  <li>n éléments si le paramètre <i>parami</i> est présent <i>n</i> fois dans la requête du client.
+  </li>
+</ul>
+
+<p>Une fois récupérés les paramètres, le script les renvoie au client.</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (web_03)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line">#!D:\Programs\ActivePython\Python2.7.2\python.exe</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> cgi</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># headers</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;Content-Type: text/plain\n&quot;</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># récupération par le serveur des informations envoyées par le client</span>
+<span class="odt-code-line"># ici prenom=P&amp;nom=N&amp;age=A</span>
+<span class="odt-code-line">formulaire<span style="color:#008080">=</span>cgi<span style="color:#0000ff">.</span>FieldStorage<span style="color:#008080">()</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on les renvoie au client</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;informations recues du service web [prenom=%s,nom=%s,age=%s]&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>formulaire<span style="color:#0000ff">.</span>getlist<span style="color:#008080">(</span><span style="color:#a31515">&quot;prenom&quot;</span><span style="color:#008080">),</span>formulaire<span style="color:#0000ff">.</span>getlist<span style="color:#008080">(</span><span style="color:#a31515">&quot;nom&quot;</span><span style="color:#008080">),</span>formulaire<span style="color:#0000ff">.</span>getlist<span style="color:#008080">(</span><span style="color:#a31515">&quot;age&quot;</span><span style="color:#008080">))</span></span>
+</code></pre></div>
+
+<p>Un test peut être fait avec un navigateur web :</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000004010000012EB70D9054.png" style="display:inline-block; margin:4px;width:13.561cm;height:3.995cm;" class="odt-zoomable" data-zoom-src="images/10000000000004010000012EB70D9054.png" /></td></tr></table>
+
+<p>En [1], l&#x27;URL du service web. On notera la présence des trois paramètres <em>nom</em>, <em>prenom</em>, <em>age</em>. En [2] la réponse du service web.</p>
+<p><a id="refheading383462423505"></a></p>
+<h3 id="1222-le-client-get">12.2.2. Le client GET</h3>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (client_web_03_GET)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> httplib<span style="color:#008080">,</span>urllib</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># constantes</span>
+<span class="odt-code-line">HOST<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">URL<span style="color:#008080">=</span><span style="color:#a31515">&quot;/cgi-bin/web_03.py&quot;</span></span>
+<span class="odt-code-line">PRENOM<span style="color:#008080">=</span><span style="color:#a31515">&quot;Jean-Paul&quot;</span></span>
+<span class="odt-code-line">NOM<span style="color:#008080">=</span><span style="color:#a31515">&quot;de la Huche&quot;</span></span>
+<span class="odt-code-line">AGE<span style="color:#008080">=</span>42</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># les paramètres doivent être encodés avant d&#x27;être envoyés au serveur</span>
+<span class="odt-code-line">params <span style="color:#008080">=</span> urllib<span style="color:#0000ff">.</span>urlencode<span style="color:#008080">({</span><span style="color:#a31515">&#x27;nom&#x27;</span><span style="color:#008080">:</span> NOM<span style="color:#008080">,</span> <span style="color:#a31515">&#x27;prenom&#x27;</span><span style="color:#008080">:</span> PRENOM<span style="color:#008080">,</span> <span style="color:#a31515">&#x27;age&#x27;</span><span style="color:#008080">:</span> AGE<span style="color:#008080">})</span></span>
+<span class="odt-code-line"># les paramètres sont mis à la fin de l&#x27;URL</span>
+<span class="odt-code-line">URL<span style="color:#008080">+=</span><span style="color:#a31515">&quot;?&quot;</span><span style="color:#008080">+</span>params</span>
+<span class="odt-code-line"># connexion</span>
+<span class="odt-code-line">connexion<span style="color:#008080">=</span>httplib<span style="color:#0000ff">.</span>HTTPConnection<span style="color:#008080">(</span>HOST<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># suivi</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>set_debuglevel<span style="color:#008080">(</span>1<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># envoi de la requête</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>request<span style="color:#008080">(</span><span style="color:#a31515">&quot;GET&quot;</span><span style="color:#008080">,</span>URL<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># traitement de la réponse</span>
+<span class="odt-code-line">reponse<span style="color:#008080">=</span>connexion<span style="color:#0000ff">.</span>getresponse<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># contenu</span>
+<span class="odt-code-line">contenu<span style="color:#008080">=</span>reponse<span style="color:#0000ff">.</span>read<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> contenu<span style="color:#008080">,</span><span style="color:#a31515">&quot;\n&quot;</span></span>
+<span class="odt-code-line"># fermeture de la connexion</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>close<span style="color:#008080">()</span></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+  <li>lignes 8-10 : les valeurs des 3 paramètres envoyés au service web ;
+  </li>
+  <li>ligne 13 : il faut les encoder. Cela se fait à l&#x27;aide de la méthode <i>urlencode</i> du module <i>urllib</i>. Ce module est importé ligne 3. La méthode admet comme paramètre un dictionnaire <i>{param1:val1, param2:val2, ...} ;</i>
+  </li>
+  <li>ligne 15 : dans une commande GET (ligne 21), le client doit mettre les paramètres encodés à la fin de l&#x27;URL du service web ;
+  </li>
+  <li>les lignes suivantes ont déjà été vues.
+  </li>
+</ul>
+
+<p><a id="refheading383482423505"></a></p>
+<h3 id="1223-les-resultats">12.2.3. Les résultats</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>dos&gt;%python% client_03_GET.py
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>send: &#39;GET /cgi-bin/web_03.py?nom=de+la+Huche&amp;age=42&amp;prenom=Jean-Paul HTTP/1.1\r\nHost: localhost\r\nAccept-Encoding: identity\r\n\r\n&#39;
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>reply: &#39;HTTP/1.1 200 OK\r\n&#39;
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a>header: Date: Wed, 15 Jun 2011 13:22:15 GMT
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a>header: Server: Apache/2.2.6 (Win32) PHP/5.2.5
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a>header: Transfer-Encoding: chunked
+<a id="__codelineno-8-7" name="__codelineno-8-7"></a>header: Content-Type: text/plain
+<a id="__codelineno-8-8" name="__codelineno-8-8"></a>informations recues du client [[&#39;Jean-Paul&#39;],[&#39;de la Huche&#39;],[&#39;42&#39;]]
+</code></pre></div></td></tr></table></div>
+<p>Notes :</p>
+<ul>
+  <li>ligne 2 : noter l&#x27;encodage des paramètres (nom, prenom, age) ;
+  </li>
+  <li>ligne 8 : la réponse du service web.
+  </li>
+</ul>
+
+<p><a id="refheading383502423505"></a></p>
+<h3 id="1224-le-client-post">12.2.4. Le client POST</h3>
+<p>Le client POST est analogue au client GET si ce n&#x27;est que les paramètres encodés ne font plus partie de l&#x27;URL cible. Ils sont passés comme 3ième argument de la requête POST (ligne 19).</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (client_web_03_POST)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> httplib<span style="color:#008080">,</span>urllib</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># constantes</span>
+<span class="odt-code-line">HOST<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">URL<span style="color:#008080">=</span><span style="color:#a31515">&quot;/cgi-bin/web_03.py&quot;</span></span>
+<span class="odt-code-line">PRENOM<span style="color:#008080">=</span><span style="color:#a31515">&quot;Jean-Paul&quot;</span></span>
+<span class="odt-code-line">NOM<span style="color:#008080">=</span><span style="color:#a31515">&quot;de la Huche&quot;</span></span>
+<span class="odt-code-line">AGE<span style="color:#008080">=</span>42</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># les paramètres doivent être encodés avant d&#x27;être envoyés au serveur</span>
+<span class="odt-code-line">params <span style="color:#008080">=</span> urllib<span style="color:#0000ff">.</span>urlencode<span style="color:#008080">({</span><span style="color:#a31515">&#x27;nom&#x27;</span><span style="color:#008080">:</span> NOM<span style="color:#008080">,</span> <span style="color:#a31515">&#x27;prenom&#x27;</span><span style="color:#008080">:</span> PRENOM<span style="color:#008080">,</span> <span style="color:#a31515">&#x27;age&#x27;</span><span style="color:#008080">:</span> AGE<span style="color:#008080">})</span></span>
+<span class="odt-code-line"># connexion</span>
+<span class="odt-code-line">connexion<span style="color:#008080">=</span>httplib<span style="color:#0000ff">.</span>HTTPConnection<span style="color:#008080">(</span>HOST<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># suivi</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>set_debuglevel<span style="color:#008080">(</span>1<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># envoi de la requête</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>request<span style="color:#008080">(</span><span style="color:#a31515">&quot;POST&quot;</span><span style="color:#008080">,</span>URL<span style="color:#008080">,</span>params<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># traitement de la réponse</span>
+<span class="odt-code-line">reponse<span style="color:#008080">=</span>connexion<span style="color:#0000ff">.</span>getresponse<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># contenu</span>
+<span class="odt-code-line">contenu<span style="color:#008080">=</span>reponse<span style="color:#0000ff">.</span>read<span style="color:#008080">()</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> contenu<span style="color:#008080">,</span><span style="color:#a31515">&quot;\n&quot;</span></span>
+<span class="odt-code-line"># fermeture de la connexion</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>close<span style="color:#008080">()</span></span>
+</code></pre></div>
+
+<p><a id="refheading383522423505"></a></p>
+<h3 id="1225-les-resultats">12.2.5. Les résultats</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>dos&gt;%python% client_03_POST.py
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>send: &#39;POST /cgi-bin/web_03.py HTTP/1.1\r\nHost: localhost\r\nAccept-Encoding:identity\r\nContent-Length: 39\r\n\r\nnom=de+la+Huche&amp;age=42&amp;prenom=Jean-Paul&#39;
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>reply: &#39;HTTP/1.1 200 OK\r\n&#39;
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>header: Date: Fri, 24 Jun 2011 12:03:31 GMT
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>header: Server: Apache/2.2.6 (Win32) PHP/5.2.5
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>header: Transfer-Encoding: chunked
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>header: Content-Type: text/plain
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>informations recues du service web [prenom=[&#39;Jean-Paul&#39;],nom=[&#39;de la Huche&#39;],age=[&#39;42&#39;]]
+</code></pre></div></td></tr></table></div>
+<p>Notes :</p>
+<ul>
+  <li>on notera ligne 2, la méthode utilisée par le client POST pour envoyer les paramètres encodés :
+    <ul>
+      <li>l&#x27;entête Http <i>Content-Length</i> indique le nombre de caractères qui vont être envoyés au service web ;
+      </li>
+      <li>cet entête Http est ensuite suivi d&#x27;une ligne vide indiquant la fin des entêtes Http ;
+      </li>
+      <li>ensuite les 39 caractères des paramètres encodés sont envoyés.
+      </li>
+    </ul>
+  </li>
+  <li>ligne 8 : la réponse du service web.
+  </li>
+</ul>
+
+<p><a id="refheading383542423505"></a></p>
+<h2 id="123-recuperation-des-variables-denvironnement-dun-service-web">12.3. Récupération des variables d&#x27;environnement d&#x27;un service web</h2>
+<p><a id="refheading383562423505"></a></p>
+<h3 id="1231-le-service-web">12.3.1. Le service web</h3>
+<p>Le script cgi Python s&#x27;exécute dans un environnement système qui possède des attributs. Ses attributs et leurs valeurs sont disponibles dans un dictionnaire <em>os.environ</em>.</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (web_04)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line">#!D:\Programs\ActivePython\Python2.7.2\python.exe</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> os</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># headers</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;Content-Type: text/plain\n&quot;</span></span>
+<span class="odt-code-line"># infos d&#x27;environnement</span>
+<span class="odt-code-line"><span style="color:#0000ff">for</span> <span style="color:#008080">(</span>cle<span style="color:#008080">,</span>valeur<span style="color:#008080">)</span> <span style="color:#0000ff">in</span> os<span style="color:#0000ff">.</span>environ<span style="color:#0000ff">.</span>items<span style="color:#008080">():</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">    print</span> <span style="color:#a31515">&quot;%s : %s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>cle<span style="color:#008080">,</span>valeur<span style="color:#008080">)</span></span>
+</code></pre></div>
+
+<p><strong>Notes</strong> :</p>
+<ul>
+  <li>ligne 3 : il faut importer le module <i>os</i> pour disposer des variables &quot;système&quot;.
+  </li>
+</ul>
+
+<p>Si on exécute directement le script ci-dessus (c.a.d. en script console et non cgi), on obtient dans la console les résultats suivants :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span><span class="w"> </span><span class="n">text</span><span class="o">/</span><span class="n">plain</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="n">TMP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">SERGET</span><span class="o">~</span><span class="mi">1</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Local</span><span class="err">\</span><span class="n">Temp</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">COMPUTERNAME</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">GPORTPERS3</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="n">USERDOMAIN</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Gportpers3</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="n">VS100COMNTOOLS</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">dotnet</span><span class="err">\</span><span class="n">Visual</span><span class="w"> </span><span class="n">Studio</span><span class="w"> </span><span class="mi">10</span><span class="err">\</span><span class="n">Common7</span><span class="err">\</span><span class="n">Tools</span><span class="err">\</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="n">VISUALSTUDIODIR</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Documents</span><span class="err">\</span><span class="n">Visual</span><span class="w"> </span><span class="n">Studio</span><span class="w"> </span><span class="mi">2010</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="n">PSMODULEPATH</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="err">\</span><span class="n">WindowsPowerShell</span><span class="err">\</span><span class="n">v1</span><span class="mf">.0</span><span class="err">\</span><span class="n">Modules</span><span class="err">\</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="n">COMMONPROGRAMFILES</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="nf">Files</span><span class="w"> </span><span class="p">(</span><span class="n">x86</span><span class="p">)</span><span class="err">\</span><span class="n">Common</span><span class="w"> </span><span class="n">Files</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="n">PROCESSOR_IDENTIFIER</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Intel64</span><span class="w"> </span><span class="n">Family</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="n">Stepping</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">GenuineIntel</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="n">PROGRAMFILES</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="nf">Files</span><span class="w"> </span><span class="p">(</span><span class="n">x86</span><span class="p">)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="n">PROCESSOR_REVISION</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="n">a07</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="n">SYSTEMROOT</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="n">PATH</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">ActivePython</span><span class="err">\</span><span class="n">Python2</span><span class="mf">.7.2</span><span class="err">\</span><span class="p">;</span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">ActivePython</span><span class="err">\</span><span class="n">Python2</span><span class="mf">.7.2</span><span class="err">\</span><span class="n">Scripts</span><span class="p">;</span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="n">Files</span><span class="err">\</span><span class="n">Common</span><span class="w"> </span><span class="n">Files</span><span class="err">\</span><span class="n">Microsoft</span><span class="w"> </span><span class="n">Shared</span><span class="err">\</span><span class="n">Windows</span><span class="w"> </span><span class="n">Live</span><span class="p">;...</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="n">PROGRAMFILES</span><span class="p">(</span><span class="n">X86</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="nf">Files</span><span class="w"> </span><span class="p">(</span><span class="n">x86</span><span class="p">)</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="n">WINDOWS_TRACING_FLAGS</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="n">TEMP</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">SERGET</span><span class="o">~</span><span class="mi">1</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Local</span><span class="err">\</span><span class="n">Temp</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="nf">COMMONPROGRAMFILES</span><span class="p">(</span><span class="n">X86</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="nf">Files</span><span class="w"> </span><span class="p">(</span><span class="n">x86</span><span class="p">)</span><span class="err">\</span><span class="n">Common</span><span class="w"> </span><span class="n">Files</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="n">PROCESSOR_ARCHITECTURE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">x86</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="n">ALLUSERSPROFILE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">ProgramData</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="n">LOCALAPPDATA</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Serge</span><span class="w"> </span><span class="n">TahÚ</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Local</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="n">HOMEPATH</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Serge</span><span class="w"> </span><span class="n">TahÚ</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="n">PROGRAMW6432</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="n">Files</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="n">USERNAME</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Serge</span><span class="w"> </span><span class="n">TahÚ</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="n">LOGONSERVER</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">\\</span><span class="n">GPORTPERS3</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="n">PROMPT</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">$P$G</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a><span class="n">SESSIONNAME</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Console</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a><span class="n">PROGRAMDATA</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">ProgramData</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a><span class="n">PATHEXT</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="na">COM</span><span class="p">;.</span><span class="na">EXE</span><span class="p">;.</span><span class="na">BAT</span><span class="p">;.</span><span class="na">CMD</span><span class="p">;.</span><span class="na">VBS</span><span class="p">;.</span><span class="na">VBE</span><span class="p">;.</span><span class="na">JS</span><span class="p">;.</span><span class="na">JSE</span><span class="p">;.</span><span class="na">WSF</span><span class="p">;.</span><span class="na">WSH</span><span class="p">;.</span><span class="na">MSC</span><span class="p">;.</span><span class="na">py</span><span class="p">;.</span><span class="na">pyw</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a><span class="n">FP_NO_HOST_CHECK</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">NO</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a><span class="n">WINDIR</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a><span class="n">PYTHON</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">python</span><span class="err">\</span><span class="n">python2</span><span class="mf">.7.2</span><span class="err">\</span><span class="n">python</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a><span class="n">WINDOWS_TRACING_LOGFILE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">BVTBin</span><span class="err">\</span><span class="n">Tests</span><span class="err">\</span><span class="n">installpackage</span><span class="err">\</span><span class="n">csilogfile</span><span class="p">.</span><span class="na">log</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a><span class="n">HOMEDRIVE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a><span class="n">SYSTEMDRIVE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a><span class="n">COMSPEC</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Windows</span><span class="err">\</span><span class="n">system32</span><span class="err">\</span><span class="n">cmd</span><span class="p">.</span><span class="na">exe</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a><span class="n">NUMBER_OF_PROCESSORS</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a><span class="n">VBOX_INSTALL_PATH</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">D</span><span class="p">:</span><span class="err">\</span><span class="n">Programs</span><span class="err">\</span><span class="n">systeme</span><span class="err">\</span><span class="n">Oracle</span><span class="err">\</span><span class="n">VirtualBox</span><span class="err">\</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a><span class="n">APPDATA</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Serge</span><span class="w"> </span><span class="n">TahÚ</span><span class="err">\</span><span class="n">AppData</span><span class="err">\</span><span class="n">Roaming</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a><span class="n">PROCESSOR_LEVEL</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">6</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a><span class="n">PROCESSOR_ARCHITEW6432</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">AMD64</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a><span class="n">COMMONPROGRAMW6432</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Program</span><span class="w"> </span><span class="n">Files</span><span class="err">\</span><span class="n">Common</span><span class="w"> </span><span class="n">Files</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a><span class="n">OS</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Windows_NT</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a><span class="n">PUBLIC</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Public</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a><span class="n">USERPROFILE</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">C</span><span class="p">:</span><span class="err">\</span><span class="n">Users</span><span class="err">\</span><span class="n">Serge</span><span class="w"> </span><span class="n">TahÚ</span>
+</code></pre></div></td></tr></table></div>
+<p>Dans un navigateur web (c&#x27;est alors le script cgi qui est exécuté), on obtient les résultats suivants :</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/100000000000028F000001D53BEB8E8A.png" style="display:inline-block; margin:4px;width:12.13cm;height:8.691cm;" class="odt-zoomable" data-zoom-src="images/100000000000028F000001D53BEB8E8A.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td></tr></table>
+
+<p>On notera que selon le contexte d&#x27;exécution, l&#x27;environnement obtenu n&#x27;est pas le même.</p>
+<p><a id="refheading383582423505"></a></p>
+<h3 id="1232-le-client-programme">12.3.2. Le client programmé</h3>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Le programme (client_web_04)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">import</span> httplib</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># constantes</span>
+<span class="odt-code-line">HOST<span style="color:#008080">=</span><span style="color:#a31515">&quot;localhost&quot;</span></span>
+<span class="odt-code-line">URL<span style="color:#008080">=</span><span style="color:#a31515">&quot;/cgi-bin/web_04.py&quot;</span></span>
+<span class="odt-code-line"># connexion</span>
+<span class="odt-code-line">connexion<span style="color:#008080">=</span>httplib<span style="color:#0000ff">.</span>HTTPConnection<span style="color:#008080">(</span>HOST<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># envoi de la requête</span>
+<span class="odt-code-line">connexion<span style="color:#0000ff">.</span>request<span style="color:#008080">(</span><span style="color:#a31515">&quot;GET&quot;</span><span style="color:#008080">,</span> URL<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># traitement de la réponse</span>
+<span class="odt-code-line">reponse<span style="color:#008080">=</span>connexion<span style="color:#0000ff">.</span>getresponse<span style="color:#008080">()</span></span>
+<span class="odt-code-line"># contenu</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> reponse<span style="color:#0000ff">.</span>read<span style="color:#008080">()</span></span>
+</code></pre></div>
+
+<p><a id="refheading383602423505"></a></p>
+<h3 id="1233-resultats">12.3.3. Résultats</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span>
+<span class="normal"><a href="#__codelineno-11-18">18</a></span>
+<span class="normal"><a href="#__codelineno-11-19">19</a></span>
+<span class="normal"><a href="#__codelineno-11-20">20</a></span>
+<span class="normal"><a href="#__codelineno-11-21">21</a></span>
+<span class="normal"><a href="#__codelineno-11-22">22</a></span>
+<span class="normal"><a href="#__codelineno-11-23">23</a></span>
+<span class="normal"><a href="#__codelineno-11-24">24</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a>SERVER_SOFTWARE : Apache/2.2.17 (Win32) PHP/5.3.5
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>SCRIPT_NAME : /cgi-bin/web_04.py
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>SERVER_SIGNATURE :
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>REQUEST_METHOD : GET
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>SERVER_PROTOCOL : HTTP/1.1
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>QUERY_STRING :
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>SYSTEMROOT : C:\Windows
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>SERVER_NAME : localhost
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>REMOTE_ADDR : 127.0.0.1
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>SERVER_PORT : 80
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a>SERVER_ADDR : 127.0.0.1
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a>DOCUMENT_ROOT : D:/Programs/sgbd/wamp/www/
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a>COMSPEC : C:\Windows\system32\cmd.exe
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a>SCRIPT_FILENAME : D:/Programs/sgbd/wamp/bin/apache/Apache2.2.17/cgi-bin/web_04.py
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a>SERVER_ADMIN : admin@localhost
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a>PATH : D:\Programs\ActivePython\Python2.7.2\;D:\Programs\ActivePython\Python2.7.
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a>2\Scripts;C:\Program Files\Common Files\Microsoft Shared\Windows Live;...
+<a id="__codelineno-11-18" name="__codelineno-11-18"></a>HTTP_HOST : localhost
+<a id="__codelineno-11-19" name="__codelineno-11-19"></a>PATHEXT : .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.py;.pyw
+<a id="__codelineno-11-20" name="__codelineno-11-20"></a>REQUEST_URI : /cgi-bin/web_04.py
+<a id="__codelineno-11-21" name="__codelineno-11-21"></a>WINDIR : C:\Windows
+<a id="__codelineno-11-22" name="__codelineno-11-22"></a>GATEWAY_INTERFACE : CGI/1.1
+<a id="__codelineno-11-23" name="__codelineno-11-23"></a>REMOTE_PORT : 58468
+<a id="__codelineno-11-24" name="__codelineno-11-24"></a>HTTP_ACCEPT_ENCODING : identity
+</code></pre></div></td></tr></table></div>
+<p>On notera que le client programmé ne reçoit pas exactement la même réponse que le navigateur web. C&#x27;est parce que ce dernier a envoyé au serveur web des informations qui ont été utilisées par le serveur web pour créer sa réponse. Ici, le client programmé n&#x27;a envoyé aucune information sur lui-même.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://tahe.developpez.com" target="_blank">
+          https://tahe.developpez.com
+        </a>
+        <br>
+        Ce cours-tutoriel écrit par <strong>Serge Tahé</strong> est mis à disposition du public selon les termes de la
+        <em>Licence Creative Commons Attribution – Pas d’Utilisation Commerciale –
+        Partage dans les Mêmes Conditions 3.0 non transposé</em>.
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>

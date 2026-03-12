@@ -1,0 +1,1108 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction au langage Python 2.7 par l'exemple">
+      
+      
+        <meta name="author" content="Serge Tahé">
+      
+      
+        <link rel="canonical" href="https://stahe.github.io/python2.7-mars-2012/les-exceptions.html">
+      
+      
+        <link rel="prev" href="les-classes-et-objets.html">
+      
+      
+        <link rel="next" href="architecture-en-couches-et-programmation-par-interfaces.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>6. Les exceptions - Introduction au langage Python 2.7 par l'exemple</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/focus.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBZC3JVJNR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var siteName = "Introduction au langage Python 2.7 par l'exemple";
+    gtag('config', 'G-EBZC3JVJNR', {
+        'page_title': siteName
+    });
+  </script>
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#6-les-exceptions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-header__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Introduction au langage Python 2.7 par l'exemple
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Les exceptions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer au mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Passer au mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer au mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Introduction au langage Python 2.7 par l&#39;exemple" class="md-nav__button md-logo" aria-label="Introduction au langage Python 2.7 par l'exemple" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Introduction au langage Python 2.7 par l'exemple
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://stahe.github.io/python2.7-mars-2012" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="avant-propos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Avant-propos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation-dun-interpreteur-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Installation d'un interpréteur Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-bases.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Les bases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Exercice d'application – [IMPOTS]
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-classes-et-objets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Les classes et objets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="les-exceptions.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Les exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="architecture-en-couches-et-programmation-par-interfaces.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Architecture en couches et programmation par interfaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-dapplication---impots-avec-architecture-en-couches.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Exercice d'application - [IMPOTS] avec architecture en couches
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="utilisation-du-sgbd-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Utilisation du SGBD MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-mysql.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Exercice [IMPOTS] avec MySQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="les-fonctions-reseau-de-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Les fonctions réseau de Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="des-services-web-en-python.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Des services web en Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-un-service-web.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Exercice [IMPOTS] avec un service WEB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="traitement-de-documents-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Traitement de documents XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="exercice-impots-avec-xml.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Exercice [IMPOTS] avec XML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<p><a id="refheading352241169597484"></a></p>
+<h1 id="6-les-exceptions">6. Les exceptions</h1>
+<p>Nous nous intéressons maintenant aux exceptions.</p>
+<table class="odt-table" style="border-collapse: collapse; width: 100%; margin-bottom: 1em;"><tr><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;"><img src="images/10000000000000BC00000122C6CC84DA.png" style="display:inline-block; margin:4px;width:3.48cm;height:5.369cm;" class="odt-zoomable" data-zoom-src="images/10000000000000BC00000122C6CC84DA.png" /></td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td><td style="border: 1px solid #ddd; padding: 8px; vertical-align: top;">&nbsp;</td></tr></table>
+
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (exceptions_01)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+<p>Le premier script illustre la nécessité de gérer les exceptions.</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-markdown">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on provoque une erreur</span>
+<span class="odt-code-line">x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+</code></pre></div>
+
+<p>On provoque volontairement une erreur pour voir les informations produites par l&#x27;interpréteur. Le résultat écran est le suivant :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Traceback (most recent call last):
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>  File &quot;D:\data\istia-1112\python\tutoriel\exceptions_01.py&quot;, line 4, in &lt;module&gt;
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    x=4/0
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>ZeroDivisionError: integer division or modulo by zero
+</code></pre></div></td></tr></table></div>
+<p>La ligne 4 nous donne :</p>
+<ul>
+<li>le type de l&#x27;exception : <em>ZeroDivisionError ;</em></li>
+<li>le message d&#x27;erreur associé : <em>integer division or modulo by zero</em>. Il est en anglais. C&#x27;est quelque chose qu&#x27;on peut vouloir changer.</li>
+</ul>
+<p>La régle essentielle en programmation est qu&#x27;on doit tout faire pour éviter les plantages &quot; sauvages &quot; comme celui ci-dessus. Même en cas d&#x27;erreur, le programme doit se terminer proprement en donnant des informations sur l&#x27;erreur qui s&#x27;est produite.</p>
+<p>La syntaxe d&#x27;une gestion d&#x27;exceptions est la suivante :</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-weight:bold">try</span>:</span>
+<span class="odt-code-line">    actions susceptibles de lancer une exception</span>
+<span class="odt-code-line"><span style="font-weight:bold">except</span> [classe d&#x27;exception, ...]:</span>
+<span class="odt-code-line">    actions de gestion de l&#x27;exception</span>
+<span class="odt-code-line"><span style="font-weight:bold">finally</span>:</span>
+<span class="odt-code-line">   actions toujours exécutées qu&#x27;il y ait exception ou non</span>
+</code></pre></div>
+
+<p>Dans le <strong>try</strong>, l&#x27;exécution des actions s&#x27;arrête dès qu&#x27;une exception survient. Dans ce cas, l&#x27;exécution se poursuit avec les actions de la clause <strong>except</strong>.</p>
+<p>La clause</p>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-weight:bold">except</span> [MyException, ...]:</span>
+</code></pre></div>
+
+<p>intercepte les exceptions de type <strong>MyException</strong> ou <strong>dérivé</strong>. Lorsque dans un <strong>try</strong> se produit une exception, l&#x27;interpréteur examine les clauses <strong>except</strong> associées au <strong>try</strong> dans l&#x27;ordre où elles ont été écrites. Il s&#x27;arrête sur la première clause <strong>except</strong> permettant de traiter l&#x27;exception qui s&#x27;est produite. S&#x27;il n&#x27;en trouve aucune, l&#x27;exception remonte à la méthode appelante. Si celle-ci a un <strong>try</strong> / <strong>except</strong>, l&#x27;exception est de nouveau gérée sinon elle continue à remonter la chaîne des méthodes appelées. En dernier ressort, elle arrive à l&#x27;interpréteur Python. Celui-ci arrête alors le programme excécuté et affiche un message d&#x27;erreur du type montré dans l&#x27;exemple précédent. La règle est donc que le programme principal doit arrêter toutes les exceptions qui peuvent remonter des méthodes appelées.</p>
+<p>Une exception transporte avec elle des informations sur l&#x27;erreur qui s&#x27;est produite. On peut les obtenir avec la syntaxe suivante :</p>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-weight:bold">except</span> MyException <span style="font-weight:bold">as</span> informations:</span>
+</code></pre></div>
+
+<p>informations est un tuple qui transporte les informations liées à l&#x27;exception.</p>
+<p>La syntaxe </p>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-weight:bold">except</span> MyException, erreur:</span>
+</code></pre></div>
+
+<p>affecte à la variable <em>erreur</em>, le message d&#x27;erreur lié à l&#x27;exception.</p>
+<p>Pour lancer une exception, on utilise la syntaxe </p>
+<div class="odt-code-rich" data-linenums="false" style="counter-reset: odtline 0;"><pre><code class="language-text">
+<span class="odt-code-line"><span style="font-weight:bold">raise</span> MyException(param1, param2, ...)</span>
+</code></pre></div>
+
+<p>où le plus souvent <em>MyException</em> est une classe dérivée de la classe <em>Exception</em>. Les paramètres passés au constructeur de la classe seront disponibles à la clause <strong>except</strong> des structures d&#x27;interception des exceptions.</p>
+<p>Ces concepts sont illustrés par le script suivant.</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (exceptions_02)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+<p>Le script suivant gère explicitement les erreurs :</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">i<span style="color:#008080">=</span>0</span>
+<span class="odt-code-line"># on provoque une erreur et on la gère</span>
+<span class="odt-code-line">x<span style="color:#008080">=</span>2</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ZeroDivisionError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"># la valeur de x n&#x27;a pas changé</span>
+<span class="odt-code-line"><span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;x=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>x<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on recommence</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> Exception<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on intercepte l&#x27;exception la plus générale</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on peut intercepter plusieurs types d&#x27;exceptions </span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ValueError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># cette exception ne se produit pas ici</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> Exception<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on intercepte l&#x27;exception la plus générale</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : (Exception) %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ZeroDivisionError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on intercepte un type précis</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : (ZeroDivisionError) %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on recommence en changeant l&#x27;ordre </span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ValueError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># cette exception ne se produit pas ici</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ZeroDivisionError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on intercepte un type précis</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : (ZeroDivisionError) %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> Exception<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on intercepte l&#x27;exception la plus générale</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : (Exception) %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># une clause except sans arguments</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>4<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on ne s&#x27;intéresse pas à la nature de l&#x27;exception ni au msg d&#x27;erreur</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : il y a eu un probleme &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># un autre type d&#x27;exception</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>int<span style="color:#008080">(</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ValueError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># une exception transporte des informations dans un tuple accessible au programme</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>int<span style="color:#008080">(</span><span style="color:#a31515">&quot;x&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ValueError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> infos<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on peut lancer des exceptions</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">raise</span> ValueError<span style="color:#008080">(</span><span style="color:#a31515">&quot;param1&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;param2&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;param3&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> ValueError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> infos<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on peut créer ses propres exceptions</span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> MyError<span style="color:#008080">(</span>Exception<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">pass</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on lance l&#x27;exception MyError</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;info1&quot;</span><span style="color:#008080">,</span><span style="color:#a31515">&quot;info2&quot;</span><span style="color:#008080">,</span> <span style="color:#a31515">&quot;info3&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> infos<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on lance l&#x27;exception MyError</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;mon msg d&#x27;erreur&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError<span style="color:#008080">,</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#008080">(</span><span style="color:#a31515">&quot;%s : %s &quot;</span><span style="color:#008080">)</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># on peut lancer n&#x27;importe quel type d&#x27;objet</span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> Objet<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __init__<span style="color:#008080">(</span>self<span style="color:#008080">,</span>msg<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        self<span style="color:#0000ff">.</span>msg<span style="color:#008080">=</span>msg</span>
+<span class="odt-code-line">    <span style="color:#0000ff">def</span> __str__<span style="color:#008080">(</span>self<span style="color:#008080">):</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> self<span style="color:#0000ff">.</span>msg</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">raise</span> Objet<span style="color:#008080">(</span><span style="color:#a31515">&quot;pb...&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> Objet <span style="color:#0000ff">as</span> erreur<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;%s : %s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span> erreur<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># la clause finally est toujours exécutée</span>
+<span class="odt-code-line"># qu&#x27;il y ait exception ou non</span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line">x<span style="color:#008080">=</span>None</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>1</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;%s : exception&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">finally</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;%s : finally x=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span>x<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">i<span style="color:#008080">+=</span>1</span>
+<span class="odt-code-line">x<span style="color:#008080">=</span>None</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    x<span style="color:#008080">=</span>2<span style="color:#008080">/</span>0</span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;%s : exception&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">finally</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;%s : finally x=%s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>i<span style="color:#008080">,</span>x<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 6-9 : on gère une division par zéro ;</li>
+<li>ligne 8 : on intercepte l&#x27;exception exacte qui se produit ;</li>
+<li>ligne 11 : à cause de l&#x27;exception qui s&#x27;est produite, <em>x</em> n&#x27;a pas reçu de valeur et n&#x27;a donc pas changé de valeur ;</li>
+<li>lignes 15-19 : on refait la même chose mais en interceptant une exception de plus haut niveau de type <em>Exception</em>. Comme l&#x27;exception <em>ZeroDivisionError</em> dérive de la classe <em>Exception</em>, la clause <em>except</em> l&#x27;arrêtera ;</li>
+<li>lignes 23-33 : on met plusieurs clauses <em>except</em> pour gérer plusieurs types d&#x27;exception. Une seule clause <em>except</em> sera exécutée ou aucune si l&#x27;exception ne vérifie aucune clause <em>except ;</em></li>
+<li>lignes 51-55 : la clause <em>except</em> peut n&#x27;avoir aucun argument. Dans ce cas, elle arrête toutes les exceptions ;</li>
+<li>lignes 59-62 : introduisent l&#x27;exception <em>ValueError ;</em></li>
+<li>lignes 66-69 : on récupère les informations transportées par l&#x27;exception ;</li>
+<li>lignes 73-76 : introduisent la façon de lancer une exception ;</li>
+<li>lignes 79-84 : illustrent l&#x27;utilisation d&#x27;une classe d&#x27;exception propriétaire <em>MyError ;</em></li>
+<li>lignes 79-80 : la classe <em>MyError</em> se contente de dériver la classe de base <em>Exception</em>. Elle n&#x27;ajoute rien à sa classe de base. Mais maintenant, elle peut être nommée explicitement dans les clauses <em>except ;</em></li>
+<li>lignes 97-107 : illustrent qu&#x27;en Python on peut en fait lancer n&#x27;importe quel type d&#x27;objet et pas simplement des objets dérivés de la classe <em>Exception ;</em></li>
+<li>lignes 109-127 : illustrent l&#x27;utilisation de la clause <em>finally</em>.</li>
+</ul>
+<p>Les résultats écran sont les suivants :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>0 : integer division or modulo by zero
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>x=2
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>1 : integer division or modulo by zero
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2 : (Exception) integer division or modulo by zero
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>3 : (ZeroDivisionError) integer division or modulo by zero
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>4 : il y a eu un probleme
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>5 : invalid literal for int() with base 10: &#39;x&#39;
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>6 : invalid literal for int() with base 10: &#39;x&#39;
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>7 : (&#39;param1&#39;, &#39;param2&#39;, &#39;param3&#39;)
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>8 : (&#39;info1&#39;, &#39;info2&#39;, &#39;info3&#39;)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>9 : mon msg d&#39;erreur
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>10 : pb...
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>11 : finally x=1
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>12 : exception
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>12 : finally x=None
+</code></pre></div>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
+<p>Programme (exceptions_03)</p>
+<hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
+<p>Ce nouveau script illustre la remontée des exceptions dans la chaîne des méthodes appelantes :</p>
+<div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
+<span class="odt-code-line"># -*- coding=utf-8 -*-</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># une exception propriétaire</span>
+<span class="odt-code-line"><span style="color:#0000ff">class</span> MyError<span style="color:#008080">(</span>Exception<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">pass</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># trois méthodes</span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f1<span style="color:#008080">(</span>x<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on ne gère pas les exceptions - elles remontent automatiquement</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">return</span> f2<span style="color:#008080">(</span>x<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f2<span style="color:#008080">(</span>y<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#008000"># on ne gère pas les exceptions - elles remontent automatiquement</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">return</span> f3<span style="color:#008080">(</span>y<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f3<span style="color:#008080">(</span>z<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">if</span> <span style="color:#008080">(</span>z <span style="color:#008080">%</span> 2<span style="color:#008080">)</span> <span style="color:#008080">==</span> 0<span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># si z est pair, on lance une exception</span> </span>
+<span class="odt-code-line">        <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;exception dans f3&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> 2<span style="color:#008080">*</span>z</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">#---------- main</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># les exceptions remontent la chaîne des méthodes appelées</span>
+<span class="odt-code-line"># jusqu&#x27;à ce qu&#x27;une méthode l&#x27;intercepte. Ici ce sera main</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> f1<span style="color:#008080">(</span>4<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;type :%s, arguments : %s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>type<span style="color:#008080">(</span>infos<span style="color:#008080">),</span>infos<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"># une méthode peut enrichir les exceptions qu&#x27;elle remonte</span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f4<span style="color:#008080">(</span>x<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> f5<span style="color:#008080">(</span>x<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">except</span> MyError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># on enrichit l&#x27;exception puis on la relance</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span>infos<span style="color:#008080">,</span><span style="color:#a31515">&quot;exception dans f4&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f5<span style="color:#008080">(</span>y<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> f6<span style="color:#008080">(</span>y<span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">except</span> MyError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># on enrichit l&#x27;exception puis on la relance</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span>infos<span style="color:#008080">,</span> <span style="color:#a31515">&quot;exception dans f5&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line"><span style="color:#0000ff">def</span> f6<span style="color:#008080">(</span>z<span style="color:#008080">):</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">if</span> <span style="color:#008080">(</span>z <span style="color:#008080">%</span> 2<span style="color:#008080">)</span> <span style="color:#008080">==</span> 0<span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#008000"># on lance une exception</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">raise</span> MyError<span style="color:#008080">(</span><span style="color:#a31515">&quot;exception dans f6&quot;</span><span style="color:#008080">)</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">else</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">        <span style="color:#0000ff">return</span> 2<span style="color:#008080">*</span>z</span>
+<span class="odt-code-line"></span>
+<span class="odt-code-line">#---------- main</span>
+<span class="odt-code-line"><span style="color:#0000ff">try</span><span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> f4<span style="color:#008080">(</span>4<span style="color:#008080">)</span></span>
+<span class="odt-code-line"><span style="color:#0000ff">except</span> MyError <span style="color:#0000ff">as</span> infos<span style="color:#008080">:</span></span>
+<span class="odt-code-line">    <span style="color:#0000ff">print</span> <span style="color:#a31515">&quot;type :%s, arguments : %s&quot;</span> <span style="color:#008080">%</span> <span style="color:#008080">(</span>type<span style="color:#008080">(</span>infos<span style="color:#008080">),</span>infos<span style="color:#008080">)</span></span>
+<span class="odt-code-line"></span>
+</code></pre></div>
+
+<p>Notes :</p>
+<ul>
+<li>lignes 27-30, dans l&#x27;appel <em>main --&gt; f1 --&gt; f2 --&gt; f3</em> (ligne 28), l&#x27;exception <em>MyError</em> lancée par <em>f3</em> va remonter jusqu&#x27;à <em>main</em>. Elle sera alors traitée par la clause <em>except</em> de la ligne 29 ;</li>
+<li>lignes 55-58 : dans l&#x27;appel <em>main --&gt; f4 --&gt; f5 --&gt; f6</em> (ligne 56), l&#x27;exception lancée <em>MyError</em> par <em>f6</em> va remonter jusqu&#x27;à <em>main</em>. Elle sera alors traitée par la clause <em>except</em> de la ligne 29. Cette fois-ci, dans sa remontée de la chaîne des méthodes appelantes, l&#x27;exception <em>MyError</em> est enrichie par des informations ajoutées par chaque méthode remontée.</li>
+</ul>
+<p>Les résultats écran sont les suivants :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>type :&lt;class &#39;<span class="gs">__main__</span>.MyError&#39;&gt;, arguments : exception dans f3
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>type :&lt;class &#39;<span class="gs">__main__</span>.MyError&#39;&gt;, arguments : (MyError(MyError(&#39;exception dans f6&#39;,), &#39;exception dans f5&#39;), &#39;exception dans f4&#39;)
+</code></pre></div></td></tr></table></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner">
+
+      <div>
+        <a href="https://tahe.developpez.com" target="_blank">
+          https://tahe.developpez.com
+        </a>
+        <br>
+        Ce cours-tutoriel écrit par <strong>Serge Tahé</strong> est mis à disposition du public selon les termes de la
+        <em>Licence Creative Commons Attribution – Pas d’Utilisation Commerciale –
+        Partage dans les Mêmes Conditions 3.0 non transposé</em>.
+      </div>
+
+    </div>
+  </div>
+
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "toc.integrate", "navigation.top"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="javascripts/focus.js"></script>
+      
+    
+  </body>
+</html>
