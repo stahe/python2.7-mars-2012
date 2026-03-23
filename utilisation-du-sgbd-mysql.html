@@ -971,7 +971,8 @@
 <p><a id="refheading383002423505"></a></p>
 <h2 id="93-connexion-a-une-base-mysql-1">9.3. Connexion à une base MySQL - 1</h2>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Programme (mysqldb_01)</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Programme (mysqldb_01)</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-java">
@@ -1081,7 +1082,8 @@
 <li>lignes 20-23 : dans la clause [finally], on ferme la connexion. En cas d&#x27;exception, on l&#x27;intercepte (ligne 23) mais on ne fait rien avec (ligne 24).</li>
 </ul>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Résultats</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Résultats</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>connexion...
@@ -1090,7 +1092,8 @@
 <p><a id="refheading383022423505"></a></p>
 <h2 id="94-connexion-a-une-base-mysql-2">9.4. Connexion à une base MySQL - 2</h2>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Programme (mysqldb_02)</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Programme (mysqldb_02)</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
@@ -1136,7 +1139,8 @@
 <li>lignes 18-34 : programme principal – appelle deux fois la méthode <em>testeConnexion</em> et affiche les éventuelles exceptions.</li>
 </ul>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Résultats</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Résultats</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
@@ -1151,7 +1155,8 @@
 <h2 id="95-creation-dune-table-mysql">9.5. Création d&#x27;une table MySQL</h2>
 <p>Maintenant qu&#x27;on sait créer une connexion avec un SGBD MySQL, on commence à émettre des ordres SQL sur cette connexion. Pour cela, nous allons nous connecter à la base créée [dbpersonnes] et utiliser la connexion pour créer une table dans la base.</p>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Programme (mysqldb_03)</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Programme (mysqldb_03)</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-sql">
@@ -1227,7 +1232,8 @@
 <li>ligne 19 : qu&#x27;il y ait erreur ou non, le curseur est fermé. Cela libère les ressources qui lui sont asociées.</li>
 </ul>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Résultats</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Résultats</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="n">personnes</span><span class="w"> </span><span class="p">(</span><span class="n">prenom</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">nom</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">(</span><span class="n">nom</span><span class="p">,</span><span class="n">prenom</span><span class="p">))</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">requete</span><span class="w"> </span><span class="n">reussie</span>
@@ -1242,7 +1248,8 @@
 <h2 id="96-remplissage-de-la-table-personnes">9.6. Remplissage de la table [personnes]</h2>
 <p>Après avoir créé précédemment la table [personnes], maintenant nous la remplissons.</p>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Programme (mysqldb_04)</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Programme (mysqldb_04)</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
@@ -1349,7 +1356,8 @@
 </code></pre></div>
 
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Résultats</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Résultats</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 <p>Le fichier <em>sql.txt</em> :</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
@@ -1397,7 +1405,8 @@
 <li>le nombre de lignes modifiées si l&#x27;ordre est INSERT, UPDATE, DELETE.</li>
 </ul>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Programme (mysqldb_05)</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Programme (mysqldb_05)</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 
 <div class="odt-code-rich" data-linenums="true" style="counter-reset: odtline 0;"><pre><code class="language-python">
@@ -1548,7 +1557,8 @@
 <li>lignes 32 et 36 : la méthode [curseur.fetchone] permet de récupérer la ligne courante du SELECT. Il existe une méthode [curseur.fetchall] qui permet de les récupérer d&#x27;un seul coup.</li>
 </ul>
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="top" />
-<p>Résultats</p>
+<div style="margin:0 0 0.75em 0; background-color:#e6e6e6; padding:0.35em 0.6em">Résultats</div>
+
 <hr style="border:0; border-top:0.51pt solid #000000; margin:0.75em 0;" data-odt-border="bottom" />
 <p>Le fichier des requêtes exécutées :</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
